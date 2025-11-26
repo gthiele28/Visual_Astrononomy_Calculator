@@ -68,4 +68,7 @@ for i in range(1,8374): #multiple loops used, ignore these values
         error_locs.write(str(i) + '\n') #newline so i can use .readlines() to split back to list later
         print("UnicodeDecodeError at " + str(i))
 
+
+raw_data.close()
+error_locs.close()
 print("Done!")
