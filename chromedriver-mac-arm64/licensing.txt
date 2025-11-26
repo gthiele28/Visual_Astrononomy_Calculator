@@ -1,0 +1,7 @@
+As far as I'm aware, distributing the .exe for chromedriver like this is
+acceptable legally and secure for users, but if I'm wrong I'd have no 
+issue removing it
+
+NOTE: This driver is only compatible with Chrome V142 on Apple ARM64 CPUS,
+IF YOU DON'T HAVE THIS INSTALL THE CORRECT VERSION AND DRAG THE
+EXTRACTED DOWNLOAD INTO THE FOLDER AS IT IS HERE, AND DELETE THIS ONE!!!
