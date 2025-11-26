@@ -73,6 +73,9 @@ def get_lpma_data(lat, lon):
     end = html_content.find(cut_f)
 
     sqm = html_content[start + len(cut_s):end]
+
+    #TODO: Get Moon phase, rise, & set data from the HTML
+    #Both the text-based and driver finding may work for this.
     
     driver.close()
     return [float(bortle), float(sqm)]
