@@ -10,6 +10,7 @@ if coord_choice == 'l':
 
     loc = open("location.txt", "w")
     loc.write(lat + "\n")
+    loc.write("test\n")
     loc.write(long)
     loc.close()
 
