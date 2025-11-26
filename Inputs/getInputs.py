@@ -8,9 +8,8 @@ if coord_choice == 'l':
     lat = input("Latitude: ")
     long = input("Longitude: ")
 
-    loc = open("location.txt", "w")
+    loc = open("Inputs/location.txt", "w")
     loc.write(lat + "\n")
-    loc.write("test\n")
     loc.write(long)
     loc.close()
 
