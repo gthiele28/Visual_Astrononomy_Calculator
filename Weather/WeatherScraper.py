@@ -49,8 +49,8 @@ def get_lpma_data(lat, lon):
     url = "https://lightpollutionmap.app/?lat=" + str(lat) + "&lng=" + str(lon) + "&zoom=17"
 
     #TODO: IF YOU DON'T HAVE AN M SERIES MAC, DOWNLOAD A DIFFERENT VERSION
-    #TODO: UPDATE THE PATH TO THIS WITH YOUR OWN, RELATIVE PATHS DON'T WORK
-    cService = webdriver.ChromeService(executable_path="/Users/jonsmith/Desktop/Visual Astronomy Calculator/chromedriver-mac-arm64/chromedriver")
+    #IF YOU ALSO USE AN ARM-64 MAC, JUST LEAVE THSI AND IT WILL WORK
+    cService = webdriver.ChromeService(executable_path="chromedriver-mac-arm64/chromedriver")
    
     driver = webdriver.Chrome(service=cService)
 
