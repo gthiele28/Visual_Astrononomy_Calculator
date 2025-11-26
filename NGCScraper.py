@@ -55,7 +55,6 @@ def extract_data(url):
 
 raw_data = open("ngc_data.json", 'w') #different filename than raw_NGC(which has actual results) to prevent me from overwriting it
 error_locs = open("error_nums.txt", "w")
-fail_count = 0
 
 for i in range(1,8374): #multiple loops used, ignore these values
     url_x = "https://www.go-astronomy.com/ngc.php?ID=" + str(i)
@@ -66,7 +65,6 @@ for i in range(1,8374): #multiple loops used, ignore these values
         raw_data.write('\n')
         print("Catalogued up to " + str(i))
     except UnicodeDecodeError:
-        fail_count += 1
         error_locs.write(str(i) + '\n') #newline so i can use .readlines() to split back to list later
         print("UnicodeDecodeError at " + str(i))
 
