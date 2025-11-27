@@ -16,9 +16,11 @@ print("Allowing this script to run will overwrite the data in ic_error nums and 
 yes = input("Are you sure you want to continue? (y/n): ")
 
 if yes == 'y':
+
+    raw_data = open("Data Collection/raw_IC.json", 'w')
+    error_locs = open("Data Collection/ic_error_nums.txt", 'w')
+
     for i in range(2,5596): #IC starts at 2 on this site for some reason, goes up to 5595
-        raw_data = open("Data Collection/raw_IC.json", 'w')
-        error_locs = open("Data Collection/ic_error_nums.txt", 'w')
         
         url_x = "https://www.go-astronomy.com/ic.php?ID=" + str(i)
 
