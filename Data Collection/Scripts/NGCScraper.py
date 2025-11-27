@@ -56,8 +56,8 @@ if __name__ == "__main__": #prevent ngc scraping from running unless this file i
     print("Running this will overwrite raw_NGC.json and ngc_error_nums, erasing your data.")
     go = input("Are you sure? (y/n): ")
     if go == 'y':
-        raw_data = open("Data Collection/raw_NGC.json", 'w') #different filename than raw_NGC(which has actual results) to prevent me from overwriting it
-        error_locs = open("Data Collection/ngc_error_nums.txt", "w")
+        raw_data = open("Data Collection/Complete Datasets/raw_NGC.json", 'w') #different filename than raw_NGC(which has actual results) to prevent me from overwriting it
+        error_locs = open("Data Collection/Error Locations/ngc_error_nums.txt", "w")
 
         for i in range(1,8374): #multiple loops used, ignore these values
             url_x = "https://www.go-astronomy.com/ngc.php?ID=" + str(i)

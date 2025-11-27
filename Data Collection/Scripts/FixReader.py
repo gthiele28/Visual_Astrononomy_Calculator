@@ -8,8 +8,8 @@
 #more closely
 
 import json
-input = open("Data Collection/error_tables.txt", "r")
-file = open("Data Collection/raw_extras.json", "w")
+input = open("Data Collection/Error Locations/error_tables.txt", "r")
+file = open("Data Collection/Complete Datasets/raw_extras.json", "w")
 
 #This will run borderline instantly without internet since text is local,
 #So no point having a safety confirmation
