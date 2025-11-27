@@ -52,23 +52,27 @@ def extract_data(url):
 
 #Runtime roughly 1 hour, try/catch triggered 3 times total
 #must update those 3 in a separate script and append to end of raw_NGC
+if __name__ == "__main__": #prevent ngc scraping from running unless this file is run
+    print("Running this will overwrite raw_NGC.json and ngc_error_nums, erasing your data.")
+    go = input("Are you sure? (y/n): ")
+    if go == 'y':
+        raw_data = open("Data Collection/raw_NGC.json", 'w') #different filename than raw_NGC(which has actual results) to prevent me from overwriting it
+        error_locs = open("Data Collection/ngc_error_nums.txt", "w")
 
-raw_data = open("ngc_data.json", 'w') #different filename than raw_NGC(which has actual results) to prevent me from overwriting it
-error_locs = open("error_nums.txt", "w")
+        for i in range(1,8374): #multiple loops used, ignore these values
+            url_x = "https://www.go-astronomy.com/ngc.php?ID=" + str(i)
 
-for i in range(1,8374): #multiple loops used, ignore these values
-    url_x = "https://www.go-astronomy.com/ngc.php?ID=" + str(i)
+            try:
+                collected = extract_data(url_x)
+                json.dump(collected, raw_data)
+                raw_data.write('\n')
+                print("Catalogued up to " + str(i))
+            except UnicodeDecodeError:
+                error_locs.write(str(i) + '\n') #newline so i can use .readlines() to split back to list later
+                print("UnicodeDecodeError at " + str(i))
 
-    try:
-        collected = extract_data(url_x)
-        json.dump(collected, raw_data)
-        raw_data.write('\n')
-        print("Catalogued up to " + str(i))
-    except UnicodeDecodeError:
-        error_locs.write(str(i) + '\n') #newline so i can use .readlines() to split back to list later
-        print("UnicodeDecodeError at " + str(i))
-
-
-raw_data.close()
-error_locs.close()
-print("Done!")
+        raw_data.close()
+        error_locs.close()
+        print("Done!")
+    else:
+        pass
