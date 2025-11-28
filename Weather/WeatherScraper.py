@@ -62,11 +62,32 @@ def get_astrospheric_data(lat, lon):
     driver = webdriver.Chrome(service=cService)
     driver.get(url)
 
-    time.sleep(10)
     #If a forecast limit is hit, wait 20 seconds then click try again
     #since that's the longest possible wait time the site gives
     #If the date is invalid or anything else, just return average for all
     #transparency data, 0% cloud cover, etc. since that's easier
+
+    #make sure user-provided date/time is valid, if not just default to
+    #current system date/time to prevent errors later on
+    try:
+        dfile = open("Inputs/date.txt", "r")
+        date = dfile.readlines()
+        user_dt = datetime.datetime(int(date[0]), int(date[1]), int(date[2]), int(date[3]), int(date[4]), 0, 0)
+        print("Now finding data for " + str(user_dt))
+    except ValueError:
+        print("user-provided date/time is invalid.  Continuing with current system time instead.")
+        user_dt = datetime.datetime.now()
+
+    #Seems like selenium driver never triggers this, but
+    #still good practice to keep in although testing is impossible
+    try:
+        error = driver.find_element(By.CLASS_NAME, "s_ForecastError")
+        if error.is_displayed():
+            print("ForecastError found, waiting out rate limit")
+        time.sleep(21) #1 extra second for safety
+        driver.navigate.refresh()
+    except Exception:
+        print("ForecastError not found, continuing as normal")
 
     driver.close()
     return []
