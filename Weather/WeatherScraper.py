@@ -13,6 +13,7 @@
 
 import selenium
 import time
+import datetime
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
@@ -55,9 +56,7 @@ def from_html(source, id, cut_s, cut_f):
 
 
 def get_astrospheric_data(lat, lon):
-    url = "https://www.astrospheric.com/?Latitude=" + str(lat) + "&Longitude=" +  str(lon) + "&Loc=Forecast"
-
-
+    url = "https://www.astrospheric.com/?Latitude=" + str(lat) + "&Longitude=" +  str(lon) + "&Loc=Forecast"    
     
     cService = webdriver.ChromeService(executable_path=path)
     driver = webdriver.Chrome(service=cService)

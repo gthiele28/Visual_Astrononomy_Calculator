@@ -1,4 +1,5 @@
 import time
+import geocoder
 from datetime import datetime
 
 def is_date_valid(year, month, day): #important for checking validity of user input
@@ -30,9 +31,22 @@ def getInputs():
             print("Choices saved successfully.")
             break
         elif coord_choice == 'c':
-            print("Still working on this. No changes to saved data have been made.")
-            print("Please just select something else")
-            time.sleep(1)
+            g = geocoder.ip("me")
+            if g.latlng != None:
+                lat, long = g.latlng
+                print("Located device at ~" + str(lat) + ", " + str(long))
+                
+                loc = open("Inputs/location.txt", "w")
+                loc.write(str(lat) + "\n")
+                loc.write(str(long))
+                loc.close()
+
+                time.sleep(1)
+                break
+
+            else:
+                print("Unable to locate device.  Please select another option")
+
         elif coord_choice == 's':
             print("Using saved data.")
             time.sleep(1)
