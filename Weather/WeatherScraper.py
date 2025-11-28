@@ -12,6 +12,7 @@
 #USING ONLY LOCATION AS INPUTS
 
 import selenium
+import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
@@ -28,6 +29,7 @@ coords[1] = float(coords[1])
 #DRAG IT HERE AND CHANGE THE FOLDER NAME IN PATH HERE TO MATCH
 #IF YOU ALSO USE AN ARM-64 MAC, JUST LEAVE THIS AND IT WILL WORK
 path = "chromedriver-mac-arm64/chromedriver"
+
 
 def from_html(source, id, cut_s, cut_f):
     #given html source code and an id to search for,
@@ -53,11 +55,19 @@ def from_html(source, id, cut_s, cut_f):
 
 
 def get_astrospheric_data(lat, lon):
-    url = "https://www.astrospheric.com/?Latitude=" + lat + "&Longitude=" +  lon + "&Loc=Forecast"
+    url = "https://www.astrospheric.com/?Latitude=" + str(lat) + "&Longitude=" +  str(lon) + "&Loc=Forecast"
+
+
     
     cService = webdriver.ChromeService(executable_path=path)
     driver = webdriver.Chrome(service=cService)
     driver.get(url)
+
+
+
+    driver.close()
+
+
 
 
 #without a complex "state" impossible to get data from this site
@@ -110,3 +120,4 @@ def get_lpma_data(lat, lon):
     return [float(bortle), float(sqm), float(illumination_percent), moonrise, moonset]
 
 print(get_lpma_data(coords[0],coords[1]))
+get_astrospheric_data(coords[0], coords[1])
