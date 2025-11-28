@@ -81,14 +81,56 @@ def get_astrospheric_data(lat, lon):
     #Seems like selenium driver never triggers this, but
     #still good practice to keep in although testing is impossible
     try:
-        error = driver.find_element(By.CLASS_NAME, "s_ForecastError")
-        if error.is_displayed():
-            print("ForecastError found, waiting out rate limit")
-        time.sleep(21) #1 extra second for safety
+        error = driver.WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.CLASS_NAME, "s_ForecastError"))
+        )
+        print("ForecastError found, waiting out rate limit")
+        time.sleep(11) #1 extra second for safety
         driver.navigate.refresh()
     except Exception:
         print("ForecastError not found, continuing as normal")
 
+    #now, we just need to find if there's a container which has the date
+    #and hour we want, if it there is we just click on it then take the data
+    #related to it from the 6 boxes on the bottom.
+    day_of_week = user_dt.weekday()
+    if day_of_week == 0:
+        day_of_week = "Mon"
+    elif day_of_week == 1:
+        day_of_week = "Tue"
+    elif day_of_week == 2:
+        day_of_week = "Wed"
+    elif day_of_week == 3:
+        day_of_week = "Thu"
+    elif day_of_week == 4:
+        day_of_week = "Fri"
+    elif day_of_week == 5:
+        day_of_week = "Sat"
+    elif day_of_week == 6:
+        day_of_week = "Sun"
+
+    search_string = day_of_week + " " + str(user_dt.day)
+
+    #Determine if the user's date is findable based on the list on the site
+    forecastContainer = WebDriverWait(driver, 10).until(
+        EC.visibility_of_element_located((By.ID, "d_ForecastContainer"))
+    )
+    dates = forecastContainer.find_elements(By.CLASS_NAME, "s_DayMarker")
+    first_date = dates[0].text
+    print(first_date)
+    first_hour = forecastContainer.find_element(By.ID, "hid0")
+    hour_num = first_hour.text
+    try:
+        first_hour.find_element((By.CSS_SELECTOR, "span[style*='font-weight: bold;]'"))
+        #only done if the PM indicator (bold style span) is located
+        hour_num += 12
+        if hour_num == 24:
+            hour_num = 0 #adjust to account for midnight
+    except Exception:
+        print("didn't find it")
+        pass
+
+    print(hour_num)
     driver.close()
     return []
 
