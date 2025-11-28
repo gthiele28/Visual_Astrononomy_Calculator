@@ -62,24 +62,20 @@ def get_astrospheric_data(lat, lon):
     driver = webdriver.Chrome(service=cService)
     driver.get(url)
 
-
+    time.sleep(10)
+    #If a forecast limit is hit, wait 20 seconds then click try again
+    #since that's the longest possible wait time the site gives
+    #If the date is invalid or anything else, just return average for all
+    #transparency data, 0% cloud cover, etc. since that's easier
 
     driver.close()
     return []
 
+#LPMA moonrise/moonset data only relevant if date given matches
+#Current date.  It's possible calculating those numbers manually
+#instead in this case may be the better option to estimate, but
+#that can wait for a basic version to be completed.
 
-
-
-#without a complex "state" impossible to get data from this site
-#may not be able to get needed data from here. Use a set of points
-#and find a line of best fit with plotting?
-def get_lpmi_data(lat, lon):
-    pass
-
-#After some testing, it's clear that simply taking data won't work
-#the site needs to let some Javascript run and fill in gaps or else
-#no data will be received and can't be scraped for by my scripting
-#therefore, selenium may be the only way to get this data
 def get_lpma_data(lat, lon):
     '''Given latitude and longitude, use Selenium to get
     accurate light pollution data through a dummy web browser
@@ -119,5 +115,5 @@ def get_lpma_data(lat, lon):
     driver.close()
     return [float(bortle), float(sqm), float(illumination_percent), moonrise, moonset]
 
-print(get_lpma_data(coords[0],coords[1]))
+#print(get_lpma_data(coords[0],coords[1]))
 print(get_astrospheric_data(coords[0], coords[1]))
