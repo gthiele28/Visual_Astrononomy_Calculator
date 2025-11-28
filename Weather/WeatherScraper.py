@@ -86,7 +86,7 @@ def get_astrospheric_data(lat, lon):
         )
         print("ForecastError found, waiting out rate limit")
         time.sleep(11) #1 extra second for safety
-        driver.navigate.refresh()
+        driver.refresh()
     except Exception:
         print("ForecastError not found, continuing as normal")
 
@@ -119,16 +119,17 @@ def get_astrospheric_data(lat, lon):
     first_date = dates[0].text
     print(first_date)
     first_hour = forecastContainer.find_element(By.ID, "hid0")
-    hour_num = first_hour.text
-    try:
-        first_hour.find_element((By.CSS_SELECTOR, "span[style*='font-weight: bold;]'"))
-        #only done if the PM indicator (bold style span) is located
+    hour_num = int(first_hour.text)
+    
+    span = first_hour.find_element(By.TAG_NAME, "span")
+    font_weight = span.value_of_css_property("font-weight")
+
+    print(font_weight)
+
+    if font_weight == "bold" or int(font_weight) >= 700:
         hour_num += 12
         if hour_num == 24:
-            hour_num = 0 #adjust to account for midnight
-    except Exception:
-        print("didn't find it")
-        pass
+            hour_num = 0
 
     print(hour_num)
     driver.close()
