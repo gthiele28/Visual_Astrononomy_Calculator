@@ -74,9 +74,24 @@ def getInputs():
             print("Please input the desired date in MM/DD/YYYY format")
             date = input("type here: ")
 
-            if is_date_valid():
-                pass
+            print("Please input the desired time in 24-hour HH:MM format")
+            utime = input("type here: ")
+
             dt = open("Inputs/date.txt", "w")
+            
+            temp = date.split("/")
+            dt.write(temp[2] + "\n")
+            dt.write(temp[0] + "\n")
+            dt.write(temp[1] + "\n")
+
+            temp = utime.split(":")
+            dt.write(temp[0] + "\n")
+            dt.write(temp[1])
+
+            dt.close()
+
+            print("Choices saved successfully.")
+            time.sleep(1)
             break
         else:
             print("Invalid Input.  Please try again.")
