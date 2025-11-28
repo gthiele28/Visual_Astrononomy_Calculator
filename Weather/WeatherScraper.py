@@ -65,6 +65,7 @@ def get_astrospheric_data(lat, lon):
 
 
     driver.close()
+    return []
 
 
 
@@ -119,4 +120,4 @@ def get_lpma_data(lat, lon):
     return [float(bortle), float(sqm), float(illumination_percent), moonrise, moonset]
 
 print(get_lpma_data(coords[0],coords[1]))
-get_astrospheric_data(coords[0], coords[1])
+print(get_astrospheric_data(coords[0], coords[1]))
