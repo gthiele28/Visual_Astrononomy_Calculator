@@ -1,6 +1,13 @@
 import time
 from datetime import datetime
 
+def is_date_valid(year, month, day): #important for checking validity of user input
+    try:
+        datetime.datetime(year, month, day)
+        return True
+    except ValueError:
+        return False
+
 def getInputs():
 
     print("Thank you for using my calculator!  Follow printed instructions, and you'll be good to go!")
@@ -28,6 +35,7 @@ def getInputs():
             time.sleep(1)
         elif coord_choice == 's':
             print("Using saved data.")
+            time.sleep(1)
             break
         else:
             print("Invalid Input.  Please try again.")
@@ -36,17 +44,40 @@ def getInputs():
     #second loop, this time to get date and time intended
     #this is saved to location.txt since it can be saved and
     #used as part of scraping from astrospheric
-    print("Next, I'm going to need the date and time you want me to find data for.  Please note that the websites I pull from only have accurate data within 3 days of the current date")
+    print("Next, I'm going to need the date and time you want me to find data for.  Please note that the websites I pull from only have accurate data within 3 days of the current date.")
     print("Would you like to use the previously saved date/time, current device date/time, or manually input one?")
     while True:
         print("type 's' for saved, 'c' for current date/time or 'd' for custom date/time")
         time_choice = input("type here: ")
         if time_choice == "s":
-            pass
+            print("Using saved data.")
+            time.sleep(1)
+            break
         elif time_choice == "c":
-            pass
+            date = datetime.now()
+
+            print("Saving current local time: " + str(date))
+
+            dt = open("Inputs/date.txt", "w")
+            dt.write(str(date.year) + "\n")
+            dt.write(str(date.month) + "\n")
+            dt.write(str(date.day) + "\n")
+            dt.write(str(date.hour) + "\n")
+            dt.write(str(date.minute))
+            dt.close()
+
+            print("Choices saved successfully.")
+            time.sleep(1)
+            break
         elif time_choice == "d":
-            pass
+
+            print("Please input the desired date in MM/DD/YYYY format")
+            date = input("type here: ")
+
+            if is_date_valid():
+                pass
+            dt = open("Inputs/date.txt", "w")
+            break
         else:
             print("Invalid Input.  Please try again.")
             time.sleep(1)
