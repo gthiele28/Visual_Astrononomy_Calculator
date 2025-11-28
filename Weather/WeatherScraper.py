@@ -11,10 +11,8 @@
 
 #USING ONLY LOCATION AS INPUTS
 
-import time
 import selenium
 from selenium import webdriver
-import selenium.webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -25,6 +23,11 @@ inputs = open("Inputs/location.txt", "r")
 coords = inputs.readlines()
 coords[0] = float(coords[0])
 coords[1] = float(coords[1])
+
+#TODO: IF YOU DON'T HAVE AN M SERIES MAC, DOWNLOAD A DIFFERENT VERSION,
+#DRAG IT HERE AND CHANGE THE FOLDER NAME IN PATH HERE TO MATCH
+#IF YOU ALSO USE AN ARM-64 MAC, JUST LEAVE THIS AND IT WILL WORK
+path = "chromedriver-mac-arm64/chromedriver"
 
 def from_html(source, id, cut_s, cut_f):
     #given html source code and an id to search for,
@@ -50,7 +53,12 @@ def from_html(source, id, cut_s, cut_f):
 
 
 def get_astrospheric_data(lat, lon):
-    pass
+    url = "https://www.astrospheric.com/?Latitude=" + lat + "&Longitude=" +  lon + "&Loc=Forecast"
+    
+    cService = webdriver.ChromeService(executable_path=path)
+    driver = webdriver.Chrome(service=cService)
+    driver.get(url)
+
 
 #without a complex "state" impossible to get data from this site
 #may not be able to get needed data from here. Use a set of points
@@ -71,10 +79,7 @@ def get_lpma_data(lat, lon):
     
     url = "https://lightpollutionmap.app/?lat=" + str(lat) + "&lng=" + str(lon) + "&zoom=17"
 
-    #TODO: IF YOU DON'T HAVE AN M SERIES MAC, DOWNLOAD A DIFFERENT VERSION,
-    #DRAG IT HERE AND CHANGE THE FOLDER NAME IN PATH HERE TO MATCH
-    #IF YOU ALSO USE AN ARM-64 MAC, JUST LEAVE THIS AND IT WILL WORK
-    cService = webdriver.ChromeService(executable_path="chromedriver-mac-arm64/chromedriver")
+    cService = webdriver.ChromeService(executable_path=path)
    
     driver = webdriver.Chrome(service=cService)
 
