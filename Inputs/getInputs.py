@@ -96,5 +96,7 @@ def getInputs():
         else:
             print("Invalid Input.  Please try again.")
             time.sleep(1)
+        
+        print("Done!  Now collecting data")
 
 getInputs()
