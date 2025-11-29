@@ -18,6 +18,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import NoSuchElementException
 
 outputs = open("Weather/weather_info.txt", "w")
 inputs = open("Inputs/location.txt", "r")
@@ -81,57 +82,53 @@ def get_astrospheric_data(lat, lon):
     #Seems like selenium driver never triggers this, but
     #still good practice to keep in although testing is impossible
     try:
-        error = driver.WebDriverWait(driver, 10).until(
+        error = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.CLASS_NAME, "s_ForecastError"))
         )
         print("ForecastError found, waiting out rate limit")
-        time.sleep(11) #1 extra second for safety
+        time.sleep(21) #1 extra second for safety
         driver.refresh()
     except Exception:
         print("ForecastError not found, continuing as normal")
 
-    #now, we just need to find if there's a container which has the date
-    #and hour we want, if it there is we just click on it then take the data
-    #related to it from the 6 boxes on the bottom.
-    day_of_week = user_dt.weekday()
-    if day_of_week == 0:
-        day_of_week = "Mon"
-    elif day_of_week == 1:
-        day_of_week = "Tue"
-    elif day_of_week == 2:
-        day_of_week = "Wed"
-    elif day_of_week == 3:
-        day_of_week = "Thu"
-    elif day_of_week == 4:
-        day_of_week = "Fri"
-    elif day_of_week == 5:
-        day_of_week = "Sat"
-    elif day_of_week == 6:
-        day_of_week = "Sun"
-
-    search_string = day_of_week + " " + str(user_dt.day)
-
-    #Determine if the user's date is findable based on the list on the site
     forecastContainer = WebDriverWait(driver, 10).until(
         EC.visibility_of_element_located((By.ID, "d_ForecastContainer"))
     )
+
     dates = forecastContainer.find_elements(By.CLASS_NAME, "s_DayMarker")
-    first_date = dates[0].text
-    print(first_date)
+    first_date = dates[0].text.split(" ")[-1]
+
+    #Find first displayed hour
     first_hour = forecastContainer.find_element(By.ID, "hid0")
     hour_num = int(first_hour.text)
     
+    #convert to 24hr format knowing PM values are bolded
     span = first_hour.find_element(By.TAG_NAME, "span")
     font_weight = span.value_of_css_property("font-weight")
 
-    print(font_weight)
-
     if font_weight == "bold" or int(font_weight) >= 700:
-        hour_num += 12
+        hour_num += 12 #adjust to 24h time to match python date/time object
         if hour_num == 24:
-            hour_num = 0
+            hour_num = 0 #set midnight to 0 instead of 24 to match format
 
-    print(hour_num)
+    curr_dt = datetime.datetime.now()
+    first_hour_dt = datetime.datetime(curr_dt.year, curr_dt.month, int(first_date), hour_num, 0, 0, 0)
+
+    difference = user_dt - first_hour_dt
+    hours = int(difference.total_seconds() // 3600)
+    
+    try:
+        hid = driver.find_element(By.ID, "hid" + str(hours))
+        hid.click()
+    except NoSuchElementException:
+        print("Your date falls outside the range available to access!")
+        print("Instead, I'll return reasonable values for the needed data")
+        print("For greater accuracy, use a closer date & time to now!")
+        return []
+
+    time.sleep(10)
+
+
     driver.close()
     return []
 
@@ -177,7 +174,7 @@ def get_lpma_data(lat, lon):
     moonset = from_html(moon_code, '''<span class="font-medium">''', '''<span class="font-medium">''', "</span>")
 
     driver.close()
-    return [float(bortle), float(sqm), float(illumination_percent), moonrise, moonset]
+    return [float(bortle), float(sqm), float(illumination_percent), moonrise, moonset] #possible for moonrise/moonset to not be displayed somehow???
 
 #print(get_lpma_data(coords[0],coords[1]))
 print(get_astrospheric_data(coords[0], coords[1]))
