@@ -186,6 +186,12 @@ def get_lpma_data(lat, lon, path):
     return [float(bortle), float(sqm), float(illumination_percent), moonrise, moonset] #possible for moonrise/moonset to not be displayed somehow???
 
 def full_weather_scrape():
+    '''
+    Designed to take the process of fully scraping, reading, and writing
+    and condense it into one function to improve convience and reduce refactoring
+    load for the potential "catch-all" script written towards the end.  Should make
+    the rest of the project somewhat easier.
+    '''
     output = open("Weather/weather_info.txt", "w")
     inputs = open("Inputs/location.txt", "r")
 
