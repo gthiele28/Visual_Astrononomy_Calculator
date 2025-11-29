@@ -20,13 +20,6 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
 
-outputs = open("Weather/weather_info.txt", "w")
-inputs = open("Inputs/location.txt", "r")
-
-coords = inputs.readlines()
-coords[0] = float(coords[0])
-coords[1] = float(coords[1])
-
 #TODO: IF YOU DON'T HAVE AN M SERIES MAC, DOWNLOAD A DIFFERENT VERSION,
 #DRAG IT HERE AND CHANGE THE FOLDER NAME IN PATH HERE TO MATCH
 #IF YOU ALSO USE AN ARM-64 MAC, JUST LEAVE THIS AND IT WILL WORK
@@ -56,7 +49,14 @@ def from_html(source, id, cut_s, cut_f):
     return source[start + len(cut_s):end]
 
 
-def get_astrospheric_data(lat, lon):
+def get_astrospheric_data(lat, lon, path):
+
+    #get relevant astrospheric data for user-provided date and time
+    #inputs: lat, lon, and the user input in date.txt
+    #output: [cloud cover (string, percent), Transparency (string, average/above average, etc.),
+    # seeing (same as Transparency), wind (string, mph), temperature (string, F)
+    # dew point (degrees F, string, includes (!!!) if dew forming on optics is a risk)]
+
     url = "https://www.astrospheric.com/?Latitude=" + str(lat) + "&Longitude=" +  str(lon) + "&Loc=Forecast"    
     
     cService = webdriver.ChromeService(executable_path=path)
@@ -128,24 +128,25 @@ def get_astrospheric_data(lat, lon):
         print("Your date falls outside the range available to access!")
         print("Instead, I'll return reasonable values for the needed data")
         print("For greater accuracy, use a closer date & time to now!")
-        return []
+        return ["15%", "Above Average", "Above Average", "5 mph", "70° F", "50° F"]
 
     #save the 6 values I want from the lower divs, and go from there
     all_6 = driver.find_elements(By.CLASS_NAME, "s_ForecastTextDetailedD")
+    
+    ret = []
     for i in all_6:
-        print(i.text)
-
-
+        ret.append(i.text)
 
     driver.close()
-    return []
+    return ret
+
 
 #LPMA moonrise/moonset data only relevant if date given matches
 #Current date.  It's possible calculating those numbers manually
 #instead in this case may be the better option to estimate, but
 #that can wait for a basic version to be completed.
 
-def get_lpma_data(lat, lon):
+def get_lpma_data(lat, lon, path):
     '''Given latitude and longitude, use Selenium to get
     accurate light pollution data through a dummy web browser
     Both inputs should be floats, and the output:
@@ -184,5 +185,29 @@ def get_lpma_data(lat, lon):
     driver.close()
     return [float(bortle), float(sqm), float(illumination_percent), moonrise, moonset] #possible for moonrise/moonset to not be displayed somehow???
 
-#print(get_lpma_data(coords[0],coords[1]))
-print(get_astrospheric_data(coords[0], coords[1]))
+def full_weather_scrape():
+    output = open("Weather/weather_info.txt", "w")
+    inputs = open("Inputs/location.txt", "r")
+
+    coords = inputs.readlines()
+    coords[0] = float(coords[0])
+    coords[1] = float(coords[1])
+
+    #TODO: IF YOU DON'T HAVE AN M SERIES MAC, DOWNLOAD A DIFFERENT VERSION,
+    #DRAG IT HERE AND CHANGE THE FOLDER NAME IN PATH HERE TO MATCH
+    #IF YOU ALSO USE AN ARM-64 MAC, JUST LEAVE THIS AND IT WILL WORK
+    path = "chromedriver-mac-arm64/chromedriver"
+
+    lpma_data = get_lpma_data(coords[0], coords[1], path)
+    astrospheric_data = get_astrospheric_data(coords[0], coords[1], path)
+
+    for i in lpma_data:
+        output.write(str(i) + "\n")
+    
+    for i in astrospheric_data:
+        output.write(str(i) + "\n")
+
+#Run this file to test all subfunctions, will not force them to run
+#When imported for use in a potential "All-in-one" script down the line
+if __name__ == "__main__":
+    full_weather_scrape()
