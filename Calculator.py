@@ -18,5 +18,9 @@ def find_nelm(bortle_class):
     nelm = 4.0 + (0.5 * (9 - bortle_class))
     return nelm
 
+#Order of results from weather_info.txt (each on its own line):
+#Bortle, SQM, Moon illumination %, Moonrise (24h), Moonset (24h),
+#Cloud cover, Transparency, Seeing, Wind, Temperature (F), Dew Point (F)
+
 if __name__ == "__main__":
     print(find_nelm(1.0))
