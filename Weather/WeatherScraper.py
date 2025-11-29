@@ -117,16 +117,24 @@ def get_astrospheric_data(lat, lon):
     difference = user_dt - first_hour_dt
     hours = int(difference.total_seconds() // 3600)
     
+    #determine whether there is data in this worth saving or not
     try:
         hid = driver.find_element(By.ID, "hid" + str(hours))
-        hid.click()
+
+        #Force driver to click via JS, luckily not blocked by site
+        #Using typical selenium commands for this breaks when blocked
+        driver.execute_script("arguments[0].click();", hid)
     except NoSuchElementException:
         print("Your date falls outside the range available to access!")
         print("Instead, I'll return reasonable values for the needed data")
         print("For greater accuracy, use a closer date & time to now!")
         return []
 
-    time.sleep(10)
+    #save the 6 values I want from the lower divs, and go from there
+    all_6 = driver.find_elements(By.CLASS_NAME, "s_ForecastTextDetailedD")
+    for i in all_6:
+        print(i.text)
+
 
 
     driver.close()
