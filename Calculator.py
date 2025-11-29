@@ -18,4 +18,5 @@ def find_nelm(bortle_class):
     nelm = 4.0 + (0.5 * (9 - bortle_class))
     return nelm
 
-print(find_nelm(1.0))
+if __name__ == "__main__":
+    print(find_nelm(1.0))
