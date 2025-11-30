@@ -9,11 +9,13 @@ common names/NGC ids to the user
 '''
 
 import numpy as np
+import jplephem
 import datetime
 import astropy
-from astropy.coordinates import SkyCoord, EarthLocation, AltAz, get_body
+from astropy.coordinates import SkyCoord, EarthLocation, AltAz, get_body, solar_system_ephemeris
 from astropy.time import Time
 import astropy.units as u
+from timezonefinder import TimezoneFinder
 
 def find_nelm(bortle_class): 
     #calculate naked eye limiting magnitude from bortle
@@ -36,12 +38,18 @@ def find_scopelm(aperture, nelm):
     return np.round(full_limiting_mag, decimals=2)
 
 def is_moon_up(user_dt, lati, long):
+
     loc = EarthLocation(lat = lati * u.deg, lon = long * u.deg)
-    t = Time(user_dt)
-    moon_coords = get_body("moon", t)
+    t = Time(str(user_dt))
+    print(t)
+    print(loc)
+    moon_coords = get_body("moon", t, loc)
     moon_altaz = moon_coords.transform_to(AltAz(location=loc, obstime=t))
 
-    if moon_altaz.alt > 0 * u.deg:
+    altitude = moon_altaz.alt.deg
+    print(altitude)
+
+    if altitude > 0:
         return True
     else:
         return False
@@ -62,6 +70,8 @@ def moon_magnitude_effect(lit):
 #Cloud cover, Transparency, Seeing, Wind, Temperature (F), Dew Point (F)
 
 def full_calc(weatherPath, datePath, locationPath, scopePath):
+    solar_system_ephemeris.set('jpl') #set to accurate planet/moon model
+
     weatherFile = open(weatherPath, "r")
     dateFile = open(datePath, "r")
     locationFile = open(locationPath, "r")
@@ -113,12 +123,13 @@ def full_calc(weatherPath, datePath, locationPath, scopePath):
     dew_point = "".join([i for i in dew_point if i.isdigit()]) #separate all non-int values to account for celsius
     dew_point = int(dew_point)
 
-    dateVals = dateFile.readlines()
-    date_time = datetime.datetime(int(dateVals[0]), int(dateVals[1]), int(dateVals[2]), int(dateVals[3]), int(dateVals[4]), 0, 0)
-
     locationVals = locationFile.readlines()
     lat = float(locationVals[0])
     lon = float(locationVals[1])
+
+    timezone = TimezoneFinder().timezone_at(lat=lat, lng=lon)
+    dateVals = dateFile.readlines()
+    date_time = datetime.datetime(int(dateVals[0]), int(dateVals[1]), int(dateVals[2]), int(dateVals[3]), int(dateVals[4]), 0, 0)
 
     scopeVals = scopeFile.readlines()
     aperture_mm = float(scopeVals[0])
