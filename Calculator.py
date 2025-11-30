@@ -9,6 +9,7 @@ common names/NGC ids to the user
 '''
 
 import numpy as np
+import datetime
 
 def find_nelm(bortle_class): 
     #calculate naked eye limiting magnitude from bortle
@@ -42,10 +43,38 @@ def full_calc(weatherPath, datePath, locationPath, scopePath):
 
     #Assign each value from these files to their own variables and
     #reformat them as deseired before continuing
+    weatherVals = weatherFile.readlines()
+    bortle = weatherVals[0]
+    sqm = weatherVals[1]
+    moon_illumination = weatherVals[2]
+    moonrise = weatherVals[3]
+    moonset = weatherVals[4]
+    cloud_cover = weatherVals[5]
+    transparency = weatherVals[6]
+    seeing = weatherVals[7]
+    wind = weatherVals[8]
+    temperature = weatherVals[9]
+    dew_point = weatherVals[10]
+
+    dateVals = dateFile.readlines()
+    date_time = datetime.datetime(int(dateVals[0]), int(dateVals[1]), int(dateVals[2]), int(dateVals[3]), int(dateVals[4]), 0, 0)
+
+    locationVals = locationFile.readlines()
+    lat = locationVals[0]
+    lon = locationVals[1]
+
+    scopeVals = scopeFile.readlines()
+    aperture_mm = scopeVals[0]
+    f_ratio = scopeVals[1]
+
+    print(weatherVals)
+    print(dateVals)
+    print(locationVals)
+    print(scopeVals)
 
     #1. Find telescope limiting magnitude (NELM + amount of extra light collected)
-    
-    #2. Add to limiting magnitude and SQM by moon phase
+
+    #2. Subtract from to limiting magnitude and add to SQM by moon phase (if it's above the horizon)
 
     #3. Calculate atmospheric extinction coefficient (in magnitudes/airmass)
 
