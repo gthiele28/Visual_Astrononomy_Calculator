@@ -31,6 +31,28 @@ def find_scopelm(aperture, nelm):
     full_limiting_mag = nelm + (5 * np.log10(aperture_cm))
     return np.round(full_limiting_mag, decimals=2)
 
+def is_moon_up(moonrise, moonset, time):
+    #determine if moon is above horizon at a given time (is time between moonrise and moonset)
+    if moonrise == None and moonset == None:
+        print("Neither value could be found, assuming moon down")
+        return False
+    
+    if moonrise == None:
+        pass
+    if moonset == None:
+        pass
+
+#increased brightness spread across sky effects diffuse objects more,
+#so its effect on the SQM is much higher than on magnitude
+
+def moon_sqm_effect(lit):
+    #sqm_increase = 4(%lit/100)
+    return 4 * (lit/100)
+
+def moon_magnitude_effect(lit):
+    #M_reduce = roughly 2.5 (amount lit from 0-1)
+    return 2.5 * (lit/100)
+
 #Order of results from weather_info.txt (each on its own line):
 #Bortle, SQM, Moon illumination %, Moonrise (24h), Moonset (24h),
 #Cloud cover, Transparency, Seeing, Wind, Temperature (F), Dew Point (F)
@@ -44,37 +66,61 @@ def full_calc(weatherPath, datePath, locationPath, scopePath):
     #Assign each value from these files to their own variables and
     #reformat them as deseired before continuing
     weatherVals = weatherFile.readlines()
-    bortle = weatherVals[0]
-    sqm = weatherVals[1]
-    moon_illumination = weatherVals[2]
+    bortle = float(weatherVals[0])
+    sqm = float(weatherVals[1])
+    moon_illumination = float(weatherVals[2])
+    
     moonrise = weatherVals[3]
+    if moonrise != "\n":
+        moonrise = moonrise.split(":")
+        moonrise = datetime.time(int(moonrise[0]), int(moonrise[1]), 0, 0)
+    else:
+        moonrise = None
+
     moonset = weatherVals[4]
-    cloud_cover = weatherVals[5]
+    if moonset != "\n":
+        moonset = moonset.split(":")
+        moonrise = datetime.time(int(moonset[0]), int(moonset[1]), 0, 0)
+    else:
+        moonset = None
+
+    cloud_cover = weatherVals[5].replace("%", "")
+    cloud_cover = int(cloud_cover)
+
     transparency = weatherVals[6]
     seeing = weatherVals[7]
-    wind = weatherVals[8]
+
+    wind = weatherVals[8].replace("mph", "")
+    wind = int(wind)
+
     temperature = weatherVals[9]
+    temperature = "".join([i for i in temperature if i.isdigit()]) #separate all non-int values to account for celsius
+    temperature = int(temperature)
+
     dew_point = weatherVals[10]
+    if dew_point.find("!!!") != -1: #dew forming on optics is a risk
+        dew_risk = True
+    else:
+        dew_risk = False
+    dew_point = "".join([i for i in dew_point if i.isdigit()]) #separate all non-int values to account for celsius
+    dew_point = int(dew_point)
 
     dateVals = dateFile.readlines()
     date_time = datetime.datetime(int(dateVals[0]), int(dateVals[1]), int(dateVals[2]), int(dateVals[3]), int(dateVals[4]), 0, 0)
 
     locationVals = locationFile.readlines()
-    lat = locationVals[0]
-    lon = locationVals[1]
+    lat = float(locationVals[0])
+    lon = float(locationVals[1])
 
     scopeVals = scopeFile.readlines()
-    aperture_mm = scopeVals[0]
-    f_ratio = scopeVals[1]
-
-    print(weatherVals)
-    print(dateVals)
-    print(locationVals)
-    print(scopeVals)
+    aperture_mm = float(scopeVals[0])
+    f_ratio = float(scopeVals[1])
 
     #1. Find telescope limiting magnitude (NELM + amount of extra light collected)
+    scope_lm = find_scopelm(aperture_mm, find_nelm(bortle))
 
-    #2. Subtract from to limiting magnitude and add to SQM by moon phase (if it's above the horizon)
+    #2. Subtract from limiting magnitude and add to SQM by moon phase (if it's above the horizon)
+
 
     #3. Calculate atmospheric extinction coefficient (in magnitudes/airmass)
 
@@ -101,4 +147,3 @@ def full_calc(weatherPath, datePath, locationPath, scopePath):
 
 if __name__ == "__main__":
     full_calc("Weather/weather_info.txt", "Inputs/date.txt", "Inputs/location.txt", "Inputs/telescope.txt")
-    print(find_scopelm(300, 7.7))
