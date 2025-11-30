@@ -111,6 +111,43 @@ def getInputs():
             print("Invalid Input.  Please try again.")
             time.sleep(1)
         
-        print("Done!  Now collecting data")
+    print("Finally, I will need your telescope data")
+    while True:
+        print('type "s" for saved data, "n" for a new telescope, and "e" for naked eye')
+        scope_choice = input("Type here: ")
+        if scope_choice == "s":
+            print("continuing with saved data")
+            time.sleep(1)
+            break
+        elif scope_choice == "n":
+            print("please enter your telescope's aperture in millimeters")
+            aperture = input("Type here: ")
+            print("now, enter your telescope's focal ratio (sometimes listed as f/X)")
+            print("If you only know aperture and focal length, focal ratio is focal length/aperture")
+            ratio = input("Type here: ")
+                
+            scope = open("Inputs/telescope.txt", "w")
+            scope.write(aperture + "\n")
+            scope.write(ratio)
+            scope.close()
 
-getInputs()
+            time.sleep(1)
+            break
+        elif scope_choice == "e":
+            print("Using default naked eye values")
+            aperture = "7" #mm fully dilated
+            ratio = "2.4" #estimated 
+            
+            scope = open("Inputs/telescope.txt", "w")
+            scope.write(aperture + "\n")
+            scope.write(ratio)
+            scope.close()
+
+            time.sleep(1)
+            break
+
+    print("Done!  Now collecting data")
+
+
+if __name__ == "__main__":
+    getInputs()

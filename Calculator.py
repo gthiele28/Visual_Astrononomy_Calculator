@@ -22,10 +22,11 @@ def find_nelm(bortle_class):
 #Bortle, SQM, Moon illumination %, Moonrise (24h), Moonset (24h),
 #Cloud cover, Transparency, Seeing, Wind, Temperature (F), Dew Point (F)
 
-def full_calc(weatherPath, datePath, locationPath):
+def full_calc(weatherPath, datePath, locationPath, scopePath):
     weatherFile = open(weatherPath, "r")
     dateFile = open(datePath, "r")
     locationFile = open(locationPath, "r")
+    scopeFile = open(scopePath, "r")
 
     #Assign each value from these files to their own variables and
     #reformat them as deseired before continuing
@@ -58,6 +59,7 @@ def full_calc(weatherPath, datePath, locationPath):
     weatherFile.close()
     dateFile.close()
     locationFile.close()
+    scopeFile.close
 
 if __name__ == "__main__":
     full_calc("Weather/weather_info.txt", "Inputs/date.txt", "Inputs/location.txt")
