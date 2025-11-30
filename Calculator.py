@@ -8,6 +8,8 @@ size/fov combo is ideal for each object
 common names/NGC ids to the user
 '''
 
+import numpy as np
+
 def find_nelm(bortle_class): 
     #calculate naked eye limiting magnitude from bortle
     #Bortle goes from 1.0 -> 9.0, and NELM goes from
@@ -17,6 +19,16 @@ def find_nelm(bortle_class):
 
     nelm = 4.0 + (0.5 * (9 - bortle_class))
     return nelm
+
+def find_scopelm(aperture, nelm):
+    #Calculate additional light, convert to magnitudes collected, 
+    #add to nelm, round for cleanness, return
+    #Want aperture as an integer in millimeters and nelm as a float
+    #return a float representing limiting magnitude (2 decimal places)
+
+    aperture_cm = aperture / 10
+    full_limiting_mag = nelm + (5 * np.log10(aperture_cm))
+    return np.round(full_limiting_mag, decimals=2)
 
 #Order of results from weather_info.txt (each on its own line):
 #Bortle, SQM, Moon illumination %, Moonrise (24h), Moonset (24h),
@@ -31,11 +43,8 @@ def full_calc(weatherPath, datePath, locationPath, scopePath):
     #Assign each value from these files to their own variables and
     #reformat them as deseired before continuing
 
-    #0. Add ability to take telescope measurements to getInputs.py,
-    #   Include default numbers for naked eye and binocular setting?
-
     #1. Find telescope limiting magnitude (NELM + amount of extra light collected)
-
+    
     #2. Add to limiting magnitude and SQM by moon phase
 
     #3. Calculate atmospheric extinction coefficient (in magnitudes/airmass)
@@ -59,7 +68,8 @@ def full_calc(weatherPath, datePath, locationPath, scopePath):
     weatherFile.close()
     dateFile.close()
     locationFile.close()
-    scopeFile.close
+    scopeFile.close()
 
 if __name__ == "__main__":
-    full_calc("Weather/weather_info.txt", "Inputs/date.txt", "Inputs/location.txt")
+    full_calc("Weather/weather_info.txt", "Inputs/date.txt", "Inputs/location.txt", "Inputs/telescope.txt")
+    print(find_scopelm(300, 7.7))
