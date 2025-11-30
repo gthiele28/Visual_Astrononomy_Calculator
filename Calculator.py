@@ -10,6 +10,10 @@ common names/NGC ids to the user
 
 import numpy as np
 import datetime
+import astropy
+from astropy.coordinates import SkyCoord, EarthLocation, AltAz, get_body
+from astropy.time import Time
+import astropy.units as u
 
 def find_nelm(bortle_class): 
     #calculate naked eye limiting magnitude from bortle
@@ -31,16 +35,16 @@ def find_scopelm(aperture, nelm):
     full_limiting_mag = nelm + (5 * np.log10(aperture_cm))
     return np.round(full_limiting_mag, decimals=2)
 
-def is_moon_up(moonrise, moonset, time):
-    #determine if moon is above horizon at a given time (is time between moonrise and moonset)
-    if moonrise == None and moonset == None:
-        print("Neither value could be found, assuming moon down")
+def is_moon_up(user_dt, lati, long):
+    loc = EarthLocation(lat = lati * u.deg, lon = long * u.deg)
+    t = Time(user_dt)
+    moon_coords = get_body("moon", t)
+    moon_altaz = moon_coords.transform_to(AltAz(location=loc, obstime=t))
+
+    if moon_altaz.alt > 0 * u.deg:
+        return True
+    else:
         return False
-    
-    if moonrise == None:
-        pass
-    if moonset == None:
-        pass
 
 #increased brightness spread across sky effects diffuse objects more,
 #so its effect on the SQM is much higher than on magnitude
@@ -70,19 +74,23 @@ def full_calc(weatherPath, datePath, locationPath, scopePath):
     sqm = float(weatherVals[1])
     moon_illumination = float(weatherVals[2])
     
-    moonrise = weatherVals[3]
-    if moonrise != "\n":
-        moonrise = moonrise.split(":")
-        moonrise = datetime.time(int(moonrise[0]), int(moonrise[1]), 0, 0)
-    else:
-        moonrise = None
+    #Moonrise and moonset scraping turned out to be useless as the site is inconsistent
+    #Using astropy for this will hopefully solve the problem, and also make adding planet
+    #support easier in the future if there's time
 
-    moonset = weatherVals[4]
-    if moonset != "\n":
-        moonset = moonset.split(":")
-        moonrise = datetime.time(int(moonset[0]), int(moonset[1]), 0, 0)
-    else:
-        moonset = None
+    # moonrise = weatherVals[3]
+    # if moonrise != "\n":
+    #     moonrise = moonrise.split(":")
+    #     moonrise = datetime.time(int(moonrise[0]), int(moonrise[1]), 0, 0)
+    # else:
+    #     moonrise = None
+
+    # moonset = weatherVals[4]
+    # if moonset != "\n":
+    #     moonset = moonset.split(":")
+    #     moonrise = datetime.time(int(moonset[0]), int(moonset[1]), 0, 0)
+    # else:
+    #     moonset = None
 
     cloud_cover = weatherVals[5].replace("%", "")
     cloud_cover = int(cloud_cover)
@@ -120,7 +128,10 @@ def full_calc(weatherPath, datePath, locationPath, scopePath):
     scope_lm = find_scopelm(aperture_mm, find_nelm(bortle))
 
     #2. Subtract from limiting magnitude and add to SQM by moon phase (if it's above the horizon)
-
+    if is_moon_up(date_time, lat, lon):
+        print("moon is up!")
+    else:
+        print("No it's not!")
 
     #3. Calculate atmospheric extinction coefficient (in magnitudes/airmass)
 
