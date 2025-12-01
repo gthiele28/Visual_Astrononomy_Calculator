@@ -9,6 +9,7 @@ common names/NGC ids to the user
 '''
 
 import numpy as np
+import ast
 import jplephem
 import datetime
 import astropy
@@ -64,7 +65,7 @@ def moon_magnitude_effect(lit):
     #M_reduce = roughly 2.5 (amount lit from 0-1)
     return 2.5 * (lit/100)
 
-#Want to go from .1 in best possible conditions to .75 in worst conditions
+#Want to go from .1 in best possible conditions to .65 in worst conditions
 #Although ideally in bad seeing with no clouds worst possible would be .5
 #Goal of somewhat emulating stellarium values (.1 for highest mountains/best sites, .2 for very good lowland locations, .35 for typical lowland, .5 in humid climates)
 def find_atmospheric_extinction(dew, transparency, seeing, temperature, clouds):
@@ -72,7 +73,7 @@ def find_atmospheric_extinction(dew, transparency, seeing, temperature, clouds):
     #For determining relative magnitude of objects
     #Assume temperatures in farenheit for this function
     #returns a float representing the coefficient
-    #formula: .1 + .25 * humidity% + .2 * transparency + .2 * seeing
+    #formula: .1 + .25 * humidity% + .15 * transparency + .15 * seeing
     
     #formula skips straight to maximum value if cloud cover above 50%
     if clouds > 50:
@@ -80,6 +81,9 @@ def find_atmospheric_extinction(dew, transparency, seeing, temperature, clouds):
         return .75
     
     relative_humidity = abs((5 * (temperature - 20 - dew)) / 100) #0-1 humidity
+
+    transparency = transparency.replace("\n", "")
+    seeing = seeing.replace("\n", "")
 
     transparency_float = 0.
     if transparency == "Cloudy":
@@ -111,9 +115,9 @@ def find_atmospheric_extinction(dew, transparency, seeing, temperature, clouds):
     elif seeing == "Excellent":
         seeing_float = 0.
     else:
-        print("unable to detect transparency value")
+        print("unable to detect seeing value")
 
-    return .1 + (.25 * relative_humidity) + (.2 * transparency_float) + (.2 * seeing_float)
+    return .1 + (.25 * relative_humidity) + (.15 * transparency_float) + (.15 * seeing_float)
 
 def find_zenith(user_dt, lati, long):
     time = Time(user_dt)
@@ -124,12 +128,39 @@ def find_zenith(user_dt, lati, long):
 
     zenith_radec = zenith_altaz.transform_to('icrs')
     print(zenith_radec)
+    return zenith_radec
+
+#Given the dictionary with the entry, it determines whether the object is in the night sky currently
+def is_above_horizon(entry, zenith,limit=90.):
+    try:
+        ra_set = entry["Right Ascension"].split(":")
+        dec_set = entry["Declination"].split(":")
+    except KeyError:
+        return False #skip objects without the full coordinate set to avoid errors
+
+    ra_deg = 15 * (float(ra_set[0]) + float(ra_set[1])/60 + float(ra_set[2])/3600)
+
+    if float(dec_set[0]) < 0:
+        sign = -1
+    else:
+        sign = 1
+    
+    dec_deg = sign * (abs(float(dec_set[0])) + float(dec_set[1])/60 + float(dec_set[2])/3600)
+
+    sky_location = SkyCoord(ra=ra_deg*u.deg, dec=dec_deg*u.deg)
+
+    distance = sky_location.separation(zenith).deg
+
+    if distance < limit:
+        return True
+    else:
+        return False
 
 #Order of results from weather_info.txt (each on its own line):
 #Bortle, SQM, Moon illumination %, Moonrise (24h), Moonset (24h),
 #Cloud cover, Transparency, Seeing, Wind, Temperature (F), Dew Point (F)
 
-def full_calc(weatherPath, datePath, locationPath, scopePath):
+def full_calc(weatherPath, datePath, locationPath, scopePath, datapaths):
     solar_system_ephemeris.set('jpl') #set to accurate planet/moon model
 
     weatherFile = open(weatherPath, "r")
@@ -207,7 +238,24 @@ def full_calc(weatherPath, datePath, locationPath, scopePath):
     #5. Loop through data files and determine which are within 90deg of Zenith
     #  (will need a function to convert the strings for these values into normal floats)
     #  (and need to convert from hours, minutes, seconds, etc into degrees)
+    
+    #Create "horizon buffer" for high light-pollution areas
+    if bortle > 7.0:
+        limit = 83.
+    elif bortle > 8.0:
+        limit = 75.
+    else:
+        limit = 90.
+
     visible_in_sky = []
+    for i in datapaths:
+        curr_file = open(i, "r")
+        entries = curr_file.readlines()
+        for j in entries:
+            curr_entry = ast.literal_eval(j) #load string as a full dictionary
+            if is_above_horizon(curr_entry, zenith, limit):
+                visible_in_sky.append(curr_entry)
+                print("Visible Object Found! " + curr_entry["NGC"])
 
     #6. For those within 90deg of zenith, filter out those too dim to be seen
     #Use magnitude for dense/"point" objects like star clusters,
@@ -226,4 +274,5 @@ def full_calc(weatherPath, datePath, locationPath, scopePath):
     scopeFile.close()
 
 if __name__ == "__main__":
-    full_calc("Weather/weather_info.txt", "Inputs/date.txt", "Inputs/location.txt", "Inputs/telescope.txt")
+    datapaths = ["Data Collection/Incomplete Datasets/old_sm.json"]
+    full_calc("Weather/weather_info.txt", "Inputs/date.txt", "Inputs/location.txt", "Inputs/telescope.txt", datapaths)
