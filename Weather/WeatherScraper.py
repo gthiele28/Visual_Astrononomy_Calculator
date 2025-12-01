@@ -185,7 +185,7 @@ def get_lpma_data(lat, lon, path):
     driver.close()
     return [float(bortle), float(sqm), float(illumination_percent), moonrise, moonset] #possible for moonrise/moonset to not be displayed somehow???
 
-def full_weather_scrape():
+def full_weather_scrape(path):
     '''
     Designed to take the process of fully scraping, reading, and writing
     and condense it into one function to improve convience and reduce refactoring
@@ -199,11 +199,6 @@ def full_weather_scrape():
     coords[0] = float(coords[0])
     coords[1] = float(coords[1])
 
-    #TODO: IF YOU DON'T HAVE AN M SERIES MAC, DOWNLOAD A DIFFERENT VERSION,
-    #DRAG IT HERE AND CHANGE THE FOLDER NAME IN PATH HERE TO MATCH
-    #IF YOU ALSO USE AN ARM-64 MAC, JUST LEAVE THIS AND IT WILL WORK
-    path = "chromedriver-mac-arm64/chromedriver"
-
     lpma_data = get_lpma_data(coords[0], coords[1], path)
     astrospheric_data = get_astrospheric_data(coords[0], coords[1], path)
 
@@ -216,4 +211,5 @@ def full_weather_scrape():
 #Run this file to test all subfunctions, will not force them to run
 #When imported for use in a potential "All-in-one" script down the line
 if __name__ == "__main__":
-    full_weather_scrape()
+    path = "chromedriver-mac-arm64/chromedriver"
+    full_weather_scrape(path)

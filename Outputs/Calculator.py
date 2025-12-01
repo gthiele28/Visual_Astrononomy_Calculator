@@ -127,7 +127,6 @@ def find_zenith(user_dt, lati, long):
     zenith_altaz = SkyCoord(alt = 90*u.deg, az = 0*u.deg, frame=frame)
 
     zenith_radec = zenith_altaz.transform_to('icrs')
-    print(zenith_radec)
     return zenith_radec
 
 #Given the dictionary with the entry, it determines whether the object is in the night sky currently
@@ -279,7 +278,6 @@ def full_calc(weatherPath, datePath, locationPath, scopePath, datapaths):
     #It's worth noting that, unlike moonlight, both magnitude and surface brightness
     #experience the same extinction coefficient and airmasses
     atmospheric_extinction_coefficient = find_atmospheric_extinction(dew_point, transparency, seeing, temperature, cloud_cover)
-    print(atmospheric_extinction_coefficient)
 
     #4. Calculate location of Zenith in RA/DEC
     zenith = find_zenith(date_time, lat, lon)
@@ -318,8 +316,24 @@ def full_calc(weatherPath, datePath, locationPath, scopePath, datapaths):
 
     #7. Store results as a .json of the raw dictionaries which meet these 
     #   condtions in a separate location
+    results_file = open("visible_objects.txt", "w")
+    for entry in visible_in_sky:
+        if "NGC" in entry:
+            name = entry["NGC"]
+        elif "IC" in entry:
+            name = entry["IC"]
 
-    #8. Print brightest 20 objects to the user
+        fileString = name + "--  "
+
+        if "Magnitude" in entry:
+            fileString += "Magnitude: " + entry["Magnitude"]
+        
+        results_file.write(fileString + "\n")
+    
+    results_file.close()
+
+    print("List of visible objects available in visible_objects.txt.")
+    print("Good Luck!")
 
     weatherFile.close()
     dateFile.close()
