@@ -71,6 +71,16 @@ def find_atmospheric_extinction(dew, transparency, seeing, temperature, clouds):
     #For determining relative magnitude of objects 
     return .1
 
+def find_zenith(user_dt, lati, long):
+    time = Time(user_dt)
+    loc = EarthLocation(lat = lati * u.deg, lon = long * u.deg)
+
+    frame = AltAz(obstime = time, location = loc)
+    zenith_altaz = SkyCoord(alt = 90*u.deg, az = 0*u.deg, frame=frame)
+
+    zenith_radec = zenith_altaz.transform_to('icrs')
+    print(zenith_radec)
+
 #Order of results from weather_info.txt (each on its own line):
 #Bortle, SQM, Moon illumination %, Moonrise (24h), Moonset (24h),
 #Cloud cover, Transparency, Seeing, Wind, Temperature (F), Dew Point (F)
@@ -105,6 +115,7 @@ def full_calc(weatherPath, datePath, locationPath, scopePath):
 
     dew_point = weatherVals[10]
     if dew_point.find("!!!") != -1: #dew forming on optics is a risk
+        print("Bring a heater or hair dryer for your optics!  Temperature is low enough they may get dew on them otherwise")
         dew_risk = True
     else:
         dew_risk = False
@@ -141,11 +152,14 @@ def full_calc(weatherPath, datePath, locationPath, scopePath):
         print("The moon is not up, meaning it won't effect your viewing")
 
     #3. Calculate atmospheric extinction coefficient (in magnitudes/airmass)
+    atmospheric_extinction_coefficient = find_atmospheric_extinction(dew_point, transparency, seeing, temperature, cloud_cover)
 
     #4. Calculate location of Zenith in RA/DEC
+    zenith = find_zenith(date_time, lat, lon)
 
     #5. Loop through data files and determine which are within 90deg of Zenith
     #  (will need a function to convert the strings for these values into normal floats)
+    #  (and need to convert from hours, minutes, seconds, etc into degrees)
 
     #6. For those within 90deg of zenith, filter out those too dim to be seen
     #Use magnitude for dense/"point" objects like star clusters,
