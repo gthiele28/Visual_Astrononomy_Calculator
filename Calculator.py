@@ -66,10 +66,54 @@ def moon_magnitude_effect(lit):
 
 #Want to go from .1 in best possible conditions to .75 in worst conditions
 #Although ideally in bad seeing with no clouds worst possible would be .5
+#Goal of somewhat emulating stellarium values (.1 for highest mountains/best sites, .2 for very good lowland locations, .35 for typical lowland, .5 in humid climates)
 def find_atmospheric_extinction(dew, transparency, seeing, temperature, clouds):
     #Estimates magnitude/airmass extinguished by atmosphere, critical
-    #For determining relative magnitude of objects 
-    return .1
+    #For determining relative magnitude of objects
+    #Assume temperatures in farenheit for this function
+    #returns a float representing the coefficient
+    #formula: .1 + .25 * humidity% + .2 * transparency + .2 * seeing
+    
+    #formula skips straight to maximum value if cloud cover above 50%
+    if clouds > 50:
+        print("Cloud cover above 50%, it's a bad idea to observe at this time")
+        return .75
+    
+    relative_humidity = abs((5 * (temperature - 20 - dew)) / 100) #0-1 humidity
+
+    transparency_float = 0.
+    if transparency == "Cloudy":
+        transparency_float = 1.
+    elif transparency == "Poor":
+        transparency_float = .8
+    elif transparency == "Below Average":
+        transparency_float = .6
+    elif transparency == "Average":
+        transparency_float = .4
+    elif transparency == "Above Average":
+        transparency_float = .2
+    elif transparency == "Excellent":
+        transparency_float = 0.
+    else:
+        print("unable to detect transparency value")
+
+    seeing_float = 0.
+    if seeing == "Cloudy":
+        seeing_float = 1.
+    elif seeing == "Poor":
+        seeing_float = .8
+    elif seeing == "Below Average":
+        seeing_float = .6
+    elif seeing == "Average":
+        seeing_float = .4
+    elif seeing == "Above Average":
+        seeing_float = .2
+    elif seeing == "Excellent":
+        seeing_float = 0.
+    else:
+        print("unable to detect transparency value")
+
+    return .1 + (.25 * relative_humidity) + (.2 * transparency_float) + (.2 * seeing_float)
 
 def find_zenith(user_dt, lati, long):
     time = Time(user_dt)
@@ -115,7 +159,7 @@ def full_calc(weatherPath, datePath, locationPath, scopePath):
 
     dew_point = weatherVals[10]
     if dew_point.find("!!!") != -1: #dew forming on optics is a risk
-        print("Bring a heater or hair dryer for your optics!  Temperature is low enough they may get dew on them otherwise")
+        print("Bring a heater or hair dryer for your optics!  Temperature is low enough they may attract dew")
         dew_risk = True
     else:
         dew_risk = False
@@ -153,6 +197,7 @@ def full_calc(weatherPath, datePath, locationPath, scopePath):
 
     #3. Calculate atmospheric extinction coefficient (in magnitudes/airmass)
     atmospheric_extinction_coefficient = find_atmospheric_extinction(dew_point, transparency, seeing, temperature, cloud_cover)
+    print(atmospheric_extinction_coefficient)
 
     #4. Calculate location of Zenith in RA/DEC
     zenith = find_zenith(date_time, lat, lon)
