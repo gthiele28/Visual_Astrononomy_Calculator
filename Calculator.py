@@ -196,6 +196,8 @@ def full_calc(weatherPath, datePath, locationPath, scopePath):
         print("The moon is not up, meaning it won't effect your viewing")
 
     #3. Calculate atmospheric extinction coefficient (in magnitudes/airmass)
+    #It's worth noting that, unlike moonlight, both magnitude and surface brightness
+    #experience the same extinction coefficient and airmasses
     atmospheric_extinction_coefficient = find_atmospheric_extinction(dew_point, transparency, seeing, temperature, cloud_cover)
     print(atmospheric_extinction_coefficient)
 
@@ -205,6 +207,7 @@ def full_calc(weatherPath, datePath, locationPath, scopePath):
     #5. Loop through data files and determine which are within 90deg of Zenith
     #  (will need a function to convert the strings for these values into normal floats)
     #  (and need to convert from hours, minutes, seconds, etc into degrees)
+    visible_in_sky = []
 
     #6. For those within 90deg of zenith, filter out those too dim to be seen
     #Use magnitude for dense/"point" objects like star clusters,
