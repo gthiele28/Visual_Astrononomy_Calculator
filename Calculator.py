@@ -136,6 +136,7 @@ def is_above_horizon(entry, zenith,limit=90.):
     try:
         ra_set = entry["Right Ascension"].split(":")
         dec_set = entry["Declination"].split(":")
+        dec_set[2] = dec_set[2].replace("PM", "")
     except KeyError:
         return False #skip objects without the full coordinate set to avoid errors
 
@@ -305,7 +306,13 @@ def full_calc(weatherPath, datePath, locationPath, scopePath, datapaths):
             if horizon[0]:
                 if can_be_resolved(curr_entry, scope_lm, horizon[1], atmospheric_extinction_coefficient):
                     visible_in_sky.append(curr_entry)
-                    print("Visible Object Found! " + curr_entry["NGC"]) #TODO: change ngc to something else to avoid IC errors
+                    try:
+                        print("Visible Object Found! " + curr_entry["NGC"])
+                    except KeyError:
+                        try:
+                            print("Visible Object Found! " + curr_entry["IC"])
+                        except KeyError:
+                            print("No clue what this is, but you found something!")
 
     #6. For those within 90deg of zenith, filter out those too dim to be seen
     #Use magnitude for dense/"point" objects like star clusters,
@@ -314,9 +321,7 @@ def full_calc(weatherPath, datePath, locationPath, scopePath, datapaths):
     #7. Store results as a .json of the raw dictionaries which meet these 
     #   condtions in a separate location
 
-    #8. Create an additional file through which the user can check
-    #   for specific objects, find brightest available objects, filter by
-    #   object type, etc?
+    #8. Print brightest 20 objects to the user
 
     weatherFile.close()
     dateFile.close()
@@ -324,5 +329,5 @@ def full_calc(weatherPath, datePath, locationPath, scopePath, datapaths):
     scopeFile.close()
 
 if __name__ == "__main__":
-    datapaths = ["Data Collection/Incomplete Datasets/old_med.json"]
+    datapaths = ["Data Collection/Complete Datasets/raw_NGC.json", "Data Collection/Complete Datasets/raw_IC.json"]
     full_calc("Weather/weather_info.txt", "Inputs/date.txt", "Inputs/location.txt", "Inputs/telescope.txt", datapaths)
