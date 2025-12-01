@@ -14,5 +14,5 @@ version and path to fit your own OS/CPU and browser version)
 This project was created for the ASTRON 98 / Intro to Python for Astronomy DeCal
 
 Also, if you run into any issues or have feature requests, feel free to fork this work or
-send them to me.  Just don't add a ui and make it one of those shitty ad-filled websites,
+send them to me.  Just don't add a ui and make it one of those "very respectable" ad-filled websites,
 there's already enough of those for astronomy already.
