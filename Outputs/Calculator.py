@@ -323,11 +323,25 @@ def full_calc(weatherPath, datePath, locationPath, scopePath, datapaths):
         elif "IC" in entry:
             name = entry["IC"]
 
-        fileString = name + "--  "
+        fileString = name + " --  "
 
-        if "Magnitude" in entry:
-            fileString += "Magnitude: " + entry["Magnitude"]
+        if "Common name" in entry:
+            fileString = name + " (" + entry["Common name"] + ") -- "
+
+        if "Constellation" in entry and "Type" in entry:
+            fileString += entry["Type"] + " in " + entry["Constellation"] + ", "
+
+        if "V-mag (visual)" in entry:
+            fileString += "Magnitude: " + entry["V-mag (visual)"] + ", "
+        elif "B-mag (blue)" in entry:
+            fileString += "B-Magnitude: " + entry["B-mag (blue)"] + ", "
         
+        if "Surface brightness" in entry:
+            fileString += "Surface Brightness: " + entry["Surface brightness"].replace("mag/arcsec<sup>2</sup>", "") + "mag/arcsecond^2, "
+
+        if "Right Ascension" in entry and "Declination" in entry:
+            fileString += "Right Ascension: " + entry["Right Ascension"] + ", Declination: " + entry["Declination"].replace("PM", "")
+
         results_file.write(fileString + "\n")
     
     results_file.close()
