@@ -138,7 +138,7 @@ def is_above_horizon(entry, zenith,limit=90.):
         dec_set = entry["Declination"].split(":")
         dec_set[2] = dec_set[2].replace("PM", "")
     except KeyError:
-        return False #skip objects without the full coordinate set to avoid errors
+        return [False] #skip objects without the full coordinate set to avoid errors
 
     ra_deg = 15 * (float(ra_set[0]) + float(ra_set[1])/60 + float(ra_set[2])/3600)
 
@@ -283,12 +283,8 @@ def full_calc(weatherPath, datePath, locationPath, scopePath, datapaths):
 
     #4. Calculate location of Zenith in RA/DEC
     zenith = find_zenith(date_time, lat, lon)
-
-    #5. Loop through data files and determine which are within 90deg of Zenith
-    #  (will need a function to convert the strings for these values into normal floats)
-    #  (and need to convert from hours, minutes, seconds, etc into degrees)
     
-    #Create "horizon buffer" for high light-pollution areas
+    #4.5 Create "horizon buffer" for high light-pollution areas
     if bortle > 7.0:
         limit = 83.
     elif bortle > 8.0:
@@ -301,9 +297,15 @@ def full_calc(weatherPath, datePath, locationPath, scopePath, datapaths):
         curr_file = open(i, "r")
         entries = curr_file.readlines()
         for j in entries:
+            #5. Loop through data files and determine which are within 90deg of Zenith
+            #  (will need a function to convert the strings for these values into normal floats)
+            #  (and need to convert from hours, minutes, seconds, etc into degrees)
             curr_entry = ast.literal_eval(j) #load string as a full dictionary
             horizon = is_above_horizon(curr_entry, zenith, limit)
             if horizon[0]:
+                #6. For those within 90deg of zenith, filter out those too dim to be seen
+                #Use magnitude for dense/"point" objects like star clusters,
+                #SQM for diffuse objects like nebulae
                 if can_be_resolved(curr_entry, scope_lm, horizon[1], atmospheric_extinction_coefficient):
                     visible_in_sky.append(curr_entry)
                     try:
@@ -313,10 +315,6 @@ def full_calc(weatherPath, datePath, locationPath, scopePath, datapaths):
                             print("Visible Object Found! " + curr_entry["IC"])
                         except KeyError:
                             print("No clue what this is, but you found something!")
-
-    #6. For those within 90deg of zenith, filter out those too dim to be seen
-    #Use magnitude for dense/"point" objects like star clusters,
-    #SQM for diffuse objects like nebulae
 
     #7. Store results as a .json of the raw dictionaries which meet these 
     #   condtions in a separate location
