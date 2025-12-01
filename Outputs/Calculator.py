@@ -10,9 +10,7 @@ common names/NGC ids to the user
 
 import numpy as np
 import ast
-import jplephem
 import datetime
-import astropy
 from astropy.coordinates import SkyCoord, EarthLocation, AltAz, get_body, solar_system_ephemeris
 from astropy.time import Time
 import astropy.units as u
