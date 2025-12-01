@@ -40,6 +40,7 @@ def is_moon_up(latitude, longitude, time_str):
 # --- Example Usage ---
 # Using current time and a location (e.g., San Diego, CA)
 current_time = Time.now()
+print(current_time)
 moon_status = is_moon_up(latitude=32.7157, longitude=-117.1611, time_str=current_time.iso)
 
 if moon_status:

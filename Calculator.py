@@ -16,6 +16,7 @@ from astropy.coordinates import SkyCoord, EarthLocation, AltAz, get_body, solar_
 from astropy.time import Time
 import astropy.units as u
 from timezonefinder import TimezoneFinder
+from zoneinfo import ZoneInfo
 
 def find_nelm(bortle_class): 
     #calculate naked eye limiting magnitude from bortle
@@ -40,14 +41,12 @@ def find_scopelm(aperture, nelm):
 def is_moon_up(user_dt, lati, long):
 
     loc = EarthLocation(lat = lati * u.deg, lon = long * u.deg)
-    t = Time(str(user_dt))
-    print(t)
-    print(loc)
+    t = Time(user_dt)
+
     moon_coords = get_body("moon", t, loc)
     moon_altaz = moon_coords.transform_to(AltAz(location=loc, obstime=t))
 
     altitude = moon_altaz.alt.deg
-    print(altitude)
 
     if altitude > 0:
         return True
@@ -64,6 +63,13 @@ def moon_sqm_effect(lit):
 def moon_magnitude_effect(lit):
     #M_reduce = roughly 2.5 (amount lit from 0-1)
     return 2.5 * (lit/100)
+
+#Want to go from .1 in best possible conditions to .75 in worst conditions
+#Although ideally in bad seeing with no clouds worst possible would be .5
+def find_atmospheric_extinction(dew, transparency, seeing, temperature, clouds):
+    #Estimates magnitude/airmass extinguished by atmosphere, critical
+    #For determining relative magnitude of objects 
+    return .1
 
 #Order of results from weather_info.txt (each on its own line):
 #Bortle, SQM, Moon illumination %, Moonrise (24h), Moonset (24h),
@@ -83,24 +89,6 @@ def full_calc(weatherPath, datePath, locationPath, scopePath):
     bortle = float(weatherVals[0])
     sqm = float(weatherVals[1])
     moon_illumination = float(weatherVals[2])
-    
-    #Moonrise and moonset scraping turned out to be useless as the site is inconsistent
-    #Using astropy for this will hopefully solve the problem, and also make adding planet
-    #support easier in the future if there's time
-
-    # moonrise = weatherVals[3]
-    # if moonrise != "\n":
-    #     moonrise = moonrise.split(":")
-    #     moonrise = datetime.time(int(moonrise[0]), int(moonrise[1]), 0, 0)
-    # else:
-    #     moonrise = None
-
-    # moonset = weatherVals[4]
-    # if moonset != "\n":
-    #     moonset = moonset.split(":")
-    #     moonrise = datetime.time(int(moonset[0]), int(moonset[1]), 0, 0)
-    # else:
-    #     moonset = None
 
     cloud_cover = weatherVals[5].replace("%", "")
     cloud_cover = int(cloud_cover)
@@ -127,9 +115,15 @@ def full_calc(weatherPath, datePath, locationPath, scopePath):
     lat = float(locationVals[0])
     lon = float(locationVals[1])
 
+    #Include timezone data for accurate location
     timezone = TimezoneFinder().timezone_at(lat=lat, lng=lon)
     dateVals = dateFile.readlines()
-    date_time = datetime.datetime(int(dateVals[0]), int(dateVals[1]), int(dateVals[2]), int(dateVals[3]), int(dateVals[4]), 0, 0)
+    if timezone:
+        timezone_info = ZoneInfo(timezone)
+        date_time = datetime.datetime(int(dateVals[0]), int(dateVals[1]), int(dateVals[2]), int(dateVals[3]), int(dateVals[4]), 0, 0, timezone_info)
+    else:
+        print("Unable to determine your time zone based on provided coordinates.  Your results may not be accurate")
+        date_time = datetime.datetime(int(dateVals[0]), int(dateVals[1]), int(dateVals[2]), int(dateVals[3]), int(dateVals[4]), 0, 0)
 
     scopeVals = scopeFile.readlines()
     aperture_mm = float(scopeVals[0])
@@ -140,9 +134,11 @@ def full_calc(weatherPath, datePath, locationPath, scopePath):
 
     #2. Subtract from limiting magnitude and add to SQM by moon phase (if it's above the horizon)
     if is_moon_up(date_time, lat, lon):
-        print("moon is up!")
+        print("The Moon is up, potentially making it harder to view dimmer or diffuse objects")
+        scope_lm -= moon_magnitude_effect(moon_illumination)
+        sqm -= moon_sqm_effect(moon_illumination)
     else:
-        print("No it's not!")
+        print("The moon is not up, meaning it won't effect your viewing")
 
     #3. Calculate atmospheric extinction coefficient (in magnitudes/airmass)
 
