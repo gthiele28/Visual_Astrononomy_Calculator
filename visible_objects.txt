@@ -1,16 +1,16 @@
-NGC 55 --  galaxy in Sculptor, Magnitude: 8.54, Surface Brightness: 22.5 mag/arcsecond^2, Right Ascension: 00:14:53.60, Declination: -39:11:47.90
 NGC 129 --  open cluster in Cassiopeia, Magnitude: 6.5, Right Ascension: 00:29:58.19, Declination: 60:12:40.20
 NGC 146 --  open cluster in Cassiopeia, Magnitude: 9.1, Right Ascension: 00:33:03.94, Declination: 63:18:32.40
+NGC 185 (Caldwell 18) -- galaxy in Cassiopeia, Magnitude: 9.2, Surface Brightness: 24.5 mag/arcsecond^2, Right Ascension: 00:38:57.97, Declination: 48:20:14.60
 NGC 188 (Caldwell 1) -- open cluster in Cepheus, Magnitude: 8.1, Right Ascension: 00:47:27.53, Declination: 85:16:10.70
 NGC 189 --  open cluster in Cassiopeia, Magnitude: 8.8, Right Ascension: 00:39:35.70, Declination: 61:05:40.10
+NGC 205 (Edward Young Star) -- galaxy in Andromeda, Magnitude: 8.15, Surface Brightness: 23.7 mag/arcsecond^2, Right Ascension: 00:40:22.08, Declination: 41:41:07.10
+NGC 221 (Le Gentil) -- galaxy in Andromeda, Magnitude: 8.13, Surface Brightness: 22.1 mag/arcsecond^2, Right Ascension: 00:42:41.83, Declination: 40:51:55.00
+NGC 224 (Andromeda Galaxy) -- galaxy in Andromeda, Magnitude: 3.44, Surface Brightness: 23.6 mag/arcsecond^2, Right Ascension: 00:42:44.35, Declination: 41:16:08.60
 NGC 225 --  open cluster in Cassiopeia, Magnitude: 7, Right Ascension: 00:43:36.38, Declination: 61:46:01.00
-NGC 247 (Caldwell 62) -- galaxy in Cetus, Magnitude: 9.21, Surface Brightness: 23.7 mag/arcsecond^2, Right Ascension: 00:47:08.55, Declination: -20:45:37.40
-NGC 288 --  globular cluster in Sculptor, Magnitude: 8.13, Right Ascension: 00:52:47.45, Declination: -26:35:23.60
-NGC 300 (Caldwell 70) -- galaxy in Sculptor, Magnitude: 8.66, Surface Brightness: 23.5 mag/arcsecond^2, Right Ascension: 00:54:53.48, Declination: -37:41:03.80
-NGC 405 --  other in Phoenix, Magnitude: 6.89, Right Ascension: 01:08:34.11, Declination: -46:40:06.60
 NGC 436 --  open cluster in Cassiopeia, Magnitude: 8.8, Right Ascension: 01:15:57.78, Declination: 58:49:01.60
 NGC 457 (Owl Cluster) -- open cluster in Cassiopeia, Magnitude: 6.4, Right Ascension: 01:19:32.65, Declination: 58:17:26.50
 NGC 581 --  open cluster in Cassiopeia, Magnitude: 7.4, Right Ascension: 01:33:21.81, Declination: 60:39:28.80
+NGC 598 (Triangulum Galaxy) -- galaxy in Triangulum, Magnitude: 5.79, Surface Brightness: 23.6 mag/arcsecond^2, Right Ascension: 01:33:50.89, Declination: 30:39:36.80
 NGC 637 --  open cluster in Cassiopeia, Magnitude: 8.2, Right Ascension: 01:43:03.11, Declination: 64:02:11.60
 NGC 654 --  open cluster in Cassiopeia, Magnitude: 6.5, Right Ascension: 01:43:59.43, Declination: 61:52:57.80
 NGC 659 --  open cluster in Cassiopeia, Magnitude: 7.9, Right Ascension: 01:44:22.99, Declination: 60:40:09.00
@@ -25,7 +25,6 @@ NGC 957 --  open cluster in Perseus, Magnitude: 7.6, Right Ascension: 02:33:19.0
 NGC 1027 --  open cluster in Cassiopeia, Magnitude: 6.7, Right Ascension: 02:42:35.06, Declination: 61:35:39.70
 NGC 1039 --  open cluster in Perseus, Magnitude: 5.2, Right Ascension: 02:42:07.40, Declination: 42:44:46.10
 NGC 1245 --  open cluster in Perseus, Magnitude: 8.4, Right Ascension: 03:14:41.46, Declination: 47:14:19.30
-NGC 1269 --  galaxy in Eridanus, Magnitude: 8.7, Surface Brightness: 23.3 mag/arcsecond^2, Right Ascension: 03:17:18.59, Declination: -41:06:29.00
 NGC 1316 (Fornax A) -- galaxy in Fornax, Magnitude: 8.48, Surface Brightness: 23.7 mag/arcsecond^2, Right Ascension: 03:22:41.72, Declination: -37:12:29.60
 NGC 1342 --  open cluster in Perseus, Magnitude: 6.7, Right Ascension: 03:31:40.12, Declination: 37:22:45.80
 NGC 1444 --  open cluster in Perseus, Magnitude: 6.6, Right Ascension: 03:49:28.88, Declination: 52:39:19.20
@@ -43,6 +42,7 @@ NGC 1778 --  open cluster in Auriga, Magnitude: 7.7, Right Ascension: 05:08:05.7
 NGC 1788 --  reflection nebula in Orion, B-Magnitude: 5.8, Right Ascension: 05:06:53.22, Declination: -03:20:27.50
 NGC 1807 --  open cluster in Taurus, Magnitude: 7, Right Ascension: 05:10:45.03, Declination: 16:30:45.90
 NGC 1817 --  open cluster in Taurus, Magnitude: 7.7, Right Ascension: 05:12:26.27, Declination: 16:41:02.70
+NGC 1851 (Caldwell 73) -- globular cluster in Columba, Magnitude: 7.23, Right Ascension: 05:14:06.73, Declination: -40:02:47.80
 NGC 1857 --  open cluster in Auriga, Magnitude: 7, Right Ascension: 05:20:05.56, Declination: 39:20:37.00
 NGC 1893 --  open cluster in Auriga, Magnitude: 7.5, Right Ascension: 05:22:44.14, Declination: 33:24:43.30
 NGC 1904 --  globular cluster in Lepus, Magnitude: 8.16, Right Ascension: 05:24:10.59, Declination: -24:31:27.20
@@ -87,6 +87,8 @@ NGC 2254 --  open cluster in Monoceros, Magnitude: 9.1, Right Ascension: 06:35:4
 NGC 2264 (Christmas Tree Cluster) -- Cluster + nebula in Monoceros, Magnitude: 3.9, Right Ascension: 06:40:58.25, Declination: 09:53:43.70
 NGC 2281 --  open cluster in Auriga, Magnitude: 5.4, Right Ascension: 06:48:17.84, Declination: 41:04:43.90
 NGC 2286 --  open cluster in Monoceros, Magnitude: 7.5, Right Ascension: 06:47:40.17, Declination: -03:08:51.60
+NGC 2287 --  open cluster in Canis Major, Magnitude: 4.5, Right Ascension: 06:45:59.94, Declination: -20:45:15.20
+NGC 2298 --  globular cluster in Puppis, Magnitude: 8.89, Right Ascension: 06:48:59.20, Declination: -36:00:19.10
 NGC 2299 --  open cluster in Monoceros, Magnitude: 8.9, Right Ascension: 06:51:53.68, Declination: -07:04:57.80
 NGC 2301 (Great Bird Cluster) -- open cluster in Monoceros, Magnitude: 6, Right Ascension: 06:51:45.30, Declination: 00:27:33.10
 NGC 2323 (Heart Cluster) -- open cluster in Monoceros, Magnitude: 5.9, Right Ascension: 07:02:40.47, Declination: -08:21:50.50
@@ -94,50 +96,69 @@ NGC 2324 --  open cluster in Monoceros, Magnitude: 8.4, Right Ascension: 07:04:0
 NGC 2331 --  open cluster in Gemini, Magnitude: 8.5, Right Ascension: 07:06:59.83, Declination: 27:15:41.70
 NGC 2335 --  open cluster in Monoceros, Magnitude: 7.2, Right Ascension: 07:06:49.45, Declination: -10:01:43.10
 NGC 2343 --  open cluster in Monoceros, Magnitude: 6.7, Right Ascension: 07:08:06.80, Declination: -10:37:00.50
+NGC 2345 --  open cluster in Canis Major, Magnitude: 7.7, Right Ascension: 07:08:18.79, Declination: -13:11:37.50
+NGC 2353 --  open cluster in Monoceros, Magnitude: 7.1, Right Ascension: 07:14:30.31, Declination: -10:15:57.10
+NGC 2354 --  open cluster in Canis Major, Magnitude: 6.5, Right Ascension: 07:14:05.27, Declination: -25:41:20.10
+NGC 2360 (Caroline's Cluster) -- open cluster in Canis Major, Magnitude: 7.2, Right Ascension: 07:17:43.12, Declination: -15:38:28.70
+NGC 2362 (Tau Canis Majoris Cluster) -- open cluster in Canis Major, Magnitude: 4.1, Right Ascension: 07:18:41.47, Declination: -24:57:15.10
+NGC 2367 --  open cluster in Canis Major, Magnitude: 7.9, Right Ascension: 07:20:04.54, Declination: -21:53:02.70
+NGC 2374 --  open cluster in Canis Major, Magnitude: 8, Right Ascension: 07:23:56.07, Declination: -13:15:48.10
+NGC 2383 --  open cluster in Canis Major, Magnitude: 8.4, Right Ascension: 07:24:39.90, Declination: -20:56:51.50
+NGC 2384 --  open cluster in Canis Major, Magnitude: 7.4, Right Ascension: 07:25:09.83, Declination: -21:01:11.50
 NGC 2395 --  open cluster in Gemini, Magnitude: 8, Right Ascension: 07:27:12.85, Declination: 13:36:29.50
+NGC 2396 --  open cluster in Puppis, Magnitude: 7.4, Right Ascension: 07:28:02.92, Declination: -11:43:10.80
 NGC 2403 (Caldwell 7) -- galaxy in Camelopardalis, Magnitude: 8.43, Surface Brightness: 23.4 mag/arcsecond^2, Right Ascension: 07:36:51.40, Declination: 65:36:09.20
+NGC 2409 --  open cluster in Puppis, Magnitude: 7.3, Right Ascension: 07:31:36.72, Declination: -17:11:25.50
+NGC 2414 --  open cluster in Puppis, Magnitude: 7.9, Right Ascension: 07:33:12.80, Declination: -15:27:13.90
 NGC 2420 --  open cluster in Gemini, Magnitude: 8.3, Right Ascension: 07:38:23.90, Declination: 21:34:26.70
+NGC 2421 --  open cluster in Puppis, Magnitude: 8.3, Right Ascension: 07:36:11.81, Declination: -20:36:44.10
+NGC 2422 --  open cluster in Puppis, Magnitude: 4.4, Right Ascension: 07:36:35.02, Declination: -14:28:57.40
+NGC 2423 --  open cluster in Puppis, Magnitude: 6.7, Right Ascension: 07:37:06.73, Declination: -13:52:17.40
+NGC 2437 --  open cluster in Puppis, Magnitude: 6.1, Right Ascension: 07:41:46.82, Declination: -14:48:36.00
+NGC 2439 --  open cluster in Puppis, Magnitude: 6.9, Right Ascension: 07:40:45.41, Declination: -31:41:32.70
+NGC 2447 --  open cluster in Puppis, Magnitude: 6.2, Right Ascension: 07:44:29.23, Declination: -23:51:11.10
+NGC 2453 --  open cluster in Puppis, Magnitude: 8.3, Right Ascension: 07:47:34.13, Declination: -27:11:41.30
+NGC 2477 (Caldwell 71) -- open cluster in Puppis, Magnitude: 5.8, Right Ascension: 07:52:09.78, Declination: -38:31:59.70
+NGC 2482 --  open cluster in Puppis, Magnitude: 7.3, Right Ascension: 07:55:10.37, Declination: -24:15:16.70
+NGC 2483 --  open cluster in Puppis, Magnitude: 7.6, Right Ascension: 07:55:38.79, Declination: -27:53:12.60
+NGC 2489 --  open cluster in Puppis, Magnitude: 7.9, Right Ascension: 07:56:14.94, Declination: -30:03:39.00
+NGC 2506 (Caldwell 54) -- open cluster in Monoceros, Magnitude: 7.6, Right Ascension: 08:00:01.78, Declination: -10:46:10.70
+NGC 2520 --  open cluster in Puppis, Magnitude: 6.5, Right Ascension: 08:04:58.18, Declination: -28:08:48.00
+NGC 2533 --  open cluster in Puppis, Magnitude: 7.6, Right Ascension: 08:07:04.10, Declination: -29:53:01.90
+NGC 2539 --  open cluster in Puppis, Magnitude: 6.5, Right Ascension: 08:10:36.98, Declination: -12:49:14.40
+NGC 2542 --  double star in Puppis, Magnitude: 4.72, Right Ascension: 08:11:16.39, Declination: -12:55:37.50
+NGC 2546 --  open cluster in Puppis, Magnitude: 6.3, Right Ascension: 08:12:15.63, Declination: -37:35:39.50
+NGC 2548 --  open cluster in Hydra, Magnitude: 5.8, Right Ascension: 08:13:43.18, Declination: -05:45:01.60
+NGC 2567 --  open cluster in Puppis, Magnitude: 7.4, Right Ascension: 08:18:35.18, Declination: -30:38:08.20
+NGC 2571 --  open cluster in Puppis, Magnitude: 7, Right Ascension: 08:18:56.35, Declination: -29:44:57.40
+NGC 2587 --  open cluster in Puppis, Magnitude: 9.2, Right Ascension: 08:23:24.08, Declination: -29:30:31.40
+NGC 2627 --  open cluster in Pyxis, Magnitude: 8.4, Right Ascension: 08:37:14.94, Declination: -29:57:01.50
+NGC 2632 (Beehive Cluster) -- open cluster in Cancer, Magnitude: 3.1, Right Ascension: 08:40:22.20, Declination: 19:40:19.40
+NGC 2658 --  open cluster in Pyxis, Magnitude: 9.2, Right Ascension: 08:43:27.34, Declination: -32:39:22.40
+NGC 2682 (King Cobra Cluster) -- open cluster in Cancer, Magnitude: 6.9, Right Ascension: 08:51:20.13, Declination: 11:48:43.00
+NGC 2903 --  galaxy in Leo, Magnitude: 8.91, Surface Brightness: 23.0 mag/arcsecond^2, Right Ascension: 09:32:10.11, Declination: 21:30:03.00
 NGC 3031 (Bode's Galaxy) -- galaxy in Ursa Major, Magnitude: 6.92, Surface Brightness: 22.7 mag/arcsecond^2, Right Ascension: 09:55:33.17, Declination: 69:03:55.10
 NGC 3034 (Cigar Galaxy) -- galaxy in Ursa Major, Magnitude: 8.3, Surface Brightness: 22.2 mag/arcsecond^2, Right Ascension: 09:55:52.73, Declination: 69:40:45.80
+NGC 3115 (Spindle Galaxy) -- galaxy in Sextans, Magnitude: 9.09, Surface Brightness: 23.0 mag/arcsecond^2, Right Ascension: 10:05:13.98, Declination: -07:43:06.90
 NGC 3148 --  star in Ursa Major, Magnitude: 6.63, Right Ascension: 10:13:43.83, Declination: 50:29:47.50
+NGC 3242 (Jupiter's Ghost) -- planetary nebula in Hydra, Magnitude: 7.7, Right Ascension: 10:24:46.08, Declination: -18:38:32.00
+NGC 3368 --  galaxy in Leo, Magnitude: 9.21, Surface Brightness: 23.1 mag/arcsecond^2, Right Ascension: 10:46:45.74, Declination: 11:49:11.80
+NGC 3521 --  galaxy in Leo, Magnitude: 9.11, Surface Brightness: 22.7 mag/arcsecond^2, Right Ascension: 11:05:48.58, Declination: -00:02:09.10
+NGC 3627 (Leo Triplet) -- galaxy in Leo, Magnitude: 8.92, Surface Brightness: 22.9 mag/arcsecond^2, Right Ascension: 11:20:14.96, Declination: 12:59:29.50
+NGC 4631 (Whale Galaxy) -- galaxy in Canes Venatici, Magnitude: 9.24, Surface Brightness: 22.4 mag/arcsecond^2, Right Ascension: 12:42:08.01, Declination: 32:32:29.40
+NGC 4736 (Cat's Eye Galaxy) -- galaxy in Canes Venatici, Magnitude: 8.24, Surface Brightness: 21.7 mag/arcsecond^2, Right Ascension: 12:50:53.06, Declination: 41:07:13.60
+NGC 5055 (Sunflower Galaxy) -- galaxy in Canes Venatici, Magnitude: 8.61, Surface Brightness: 23.0 mag/arcsecond^2, Right Ascension: 13:15:49.33, Declination: 42:01:45.40
+NGC 5194 (Whirlpool Galaxy) -- galaxy in Canes Venatici, Magnitude: 8.36, Surface Brightness: 22.9 mag/arcsecond^2, Right Ascension: 13:29:52.71, Declination: 47:11:42.60
+NGC 5457 --  galaxy in Ursa Major, Magnitude: 7.9, Surface Brightness: 23.9 mag/arcsecond^2, Right Ascension: 14:03:12.54, Declination: 54:20:56.20
 NGC 6543 (Cat's Eye Nebula) -- planetary nebula in Draco, Magnitude: 9.01, Right Ascension: 17:58:33.39, Declination: 66:37:59.50
-NGC 6811 --  open cluster in Cygnus, Magnitude: 6.8, Right Ascension: 19:37:17.91, Declination: 46:23:19.80
-NGC 6819 (Foxhead Cluster) -- open cluster in Cygnus, Magnitude: 7.3, Right Ascension: 19:41:18.09, Declination: 40:11:12.30
-NGC 6830 --  open cluster in Vulpecula, Magnitude: 7.9, Right Ascension: 19:50:59.58, Declination: 23:06:00.50
-NGC 6834 --  open cluster in Cygnus, Magnitude: 7.8, Right Ascension: 19:52:12.56, Declination: 29:24:29.40
-NGC 6853 (Dumbbell Nebula) -- planetary nebula in Vulpecula, Magnitude: 7.4, Right Ascension: 19:59:36.38, Declination: 22:43:15.70
-NGC 6866 --  open cluster in Cygnus, Magnitude: 7.6, Right Ascension: 20:03:55.18, Declination: 44:09:32.80
-NGC 6871 --  open cluster in Cygnus, Magnitude: 5.2, Right Ascension: 20:05:59.44, Declination: 35:46:38.10
-NGC 6883 --  open cluster in Cygnus, Magnitude: 8, Right Ascension: 20:11:19.75, Declination: 35:49:55.90
-NGC 6888 (Crescent Nebula) -- H II region in Cygnus, B-Magnitude: 7.44, Right Ascension: 20:12:06.55, Declination: 38:21:17.80
-NGC 6910 --  open cluster in Cygnus, Magnitude: 7.4, Right Ascension: 20:23:12.05, Declination: 40:46:43.00
-NGC 6913 (Cooling Tower) -- open cluster in Cygnus, Magnitude: 6.6, Right Ascension: 20:23:57.77, Declination: 38:30:27.60
 NGC 6939 --  open cluster in Cepheus, Magnitude: 7.8, Right Ascension: 20:31:30.13, Declination: 60:39:43.50
-NGC 6940 --  open cluster in Vulpecula, Magnitude: 6.3, Right Ascension: 20:34:26.69, Declination: 28:16:57.80
 NGC 6946 (Fireworks Galaxy) -- galaxy in Cygnus, Magnitude: 9.05, Surface Brightness: 23.7 mag/arcsecond^2, Right Ascension: 20:34:52.32, Declination: 60:09:14.10
-NGC 6960 (Western Veil Nebula) -- supernova remnant in Cygnus, B-Magnitude: 7, Right Ascension: 20:45:58.18, Declination: 30:35:42.50
-NGC 6992 (Eastern Veil Nebula) -- supernova remnant in Cygnus, B-Magnitude: 7, Right Ascension: 20:56:19.07, Declination: 31:44:33.90
-NGC 6995 (Bat Nebula) -- supernova remnant in Cygnus, B-Magnitude: 7, Right Ascension: 20:57:10.76, Declination: 31:14:06.60
-NGC 7000 (North America Nebula) -- H II region in Cygnus, B-Magnitude: 4, Right Ascension: 20:59:17.14, Declination: 44:31:43.60
 NGC 7023 (Iris Nebula) -- nebula in Cepheus, B-Magnitude: 7.2, Right Ascension: 21:01:35.62, Declination: 68:10:10.40
-NGC 7027 --  planetary nebula in Cygnus, Magnitude: 8.5, Right Ascension: 21:07:01.53, Declination: 42:14:11.50
-NGC 7031 --  open cluster in Cygnus, Magnitude: 9.1, Right Ascension: 21:07:12.55, Declination: 50:52:32.00
-NGC 7039 --  open cluster in Cygnus, Magnitude: 7.6, Right Ascension: 21:10:47.80, Declination: 45:37:18.50
-NGC 7062 --  open cluster in Cygnus, Magnitude: 8.3, Right Ascension: 21:23:27.48, Declination: 46:22:42.70
-NGC 7063 --  open cluster in Cygnus, Magnitude: 7, Right Ascension: 21:24:21.70, Declination: 36:29:15.00
-NGC 7078 (Pegasus Cluster) -- globular cluster in Pegasus, Magnitude: 6.3, Right Ascension: 21:29:58.38, Declination: 12:10:00.60
-NGC 7082 --  open cluster in Cygnus, Magnitude: 7.2, Right Ascension: 21:29:17.74, Declination: 47:07:34.60
-NGC 7086 --  open cluster in Cygnus, Magnitude: 8.4, Right Ascension: 21:30:27.55, Declination: 51:36:01.90
-NGC 7089 --  globular cluster in Aquarius, Magnitude: 6.25, Right Ascension: 21:33:27.01, Declination: -00:49:23.90
-NGC 7092 --  open cluster in Cygnus, Magnitude: 4.6, Right Ascension: 21:31:48.32, Declination: 48:26:17.40
-NGC 7114 (Schmidt's Nova Cygni) -- star in Cygnus, Magnitude: 3, Right Ascension: 21:41:44.03, Declination: 42:50:30.50
 NGC 7160 --  open cluster in Cepheus, Magnitude: 6.1, Right Ascension: 21:53:40.27, Declination: 62:36:11.90
-NGC 7209 --  open cluster in Lacerta, Magnitude: 7.7, Right Ascension: 22:05:07.84, Declination: 46:29:00.70
 NGC 7234 --  open cluster in Cepheus, Magnitude: 7.7, Right Ascension: 22:12:25.02, Declination: 57:16:16.80
 NGC 7243 (Caldwell 16) -- open cluster in Lacerta, Magnitude: 6.4, Right Ascension: 22:15:08.58, Declination: 49:53:51.00
 NGC 7245 --  open cluster in Lacerta, Magnitude: 9.2, Right Ascension: 22:15:11.51, Declination: 54:20:33.20
 NGC 7261 --  open cluster in Cepheus, Magnitude: 8.4, Right Ascension: 22:20:06.39, Declination: 58:03:06.60
-NGC 7293 (Helix Nebula) -- planetary nebula in Aquarius, Magnitude: 7.3, Right Ascension: 22:29:38.57, Declination: -20:50:14.40
 NGC 7380 (Wizard Nebula) -- Cluster + nebula in Cepheus, Magnitude: 7.2, Right Ascension: 22:47:21.01, Declination: 58:07:56.70
 NGC 7510 --  open cluster in Cepheus, Magnitude: 7.9, Right Ascension: 23:11:03.78, Declination: 60:34:15.20
 NGC 7654 --  open cluster in Cassiopeia, Magnitude: 6.9, Right Ascension: 23:24:48.40, Declination: 61:35:35.40
@@ -151,13 +172,12 @@ IC 127 --  galaxy in Cetus, Magnitude: 9.2, Surface Brightness: 23.4 mag/arcseco
 IC 409 --  galaxy pair in Orion, Surface Brightness: 23.6 mag/arcsecond^2, Right Ascension: 05:19:33.55, Declination: 03:19:06.20
 IC 444 --  reflection nebula in Gemini, B-Magnitude: 7.03, Right Ascension: 06:18:34.00, Declination: 23:18:48.00
 IC 447 --  H II region in Monoceros, B-Magnitude: 7.7, Right Ascension: 06:31:00.32, Declination: 09:53:50.80
-IC 1318 (Sadr Region) -- star in Cygnus, Magnitude: 2.23, Right Ascension: 20:22:13.69, Declination: 40:15:24.10
+IC 921 --  galaxy in Ursa Major, Surface Brightness: 23.4 mag/arcsecond^2, Right Ascension: 13:43:08.00, Declination: 55:39:04.40
+IC 931 --  galaxy in Ursa Major, Surface Brightness: 23.1 mag/arcsecond^2, Right Ascension: 13:43:49.19, Declination: 55:37:26.30
 IC 1442 --  open cluster in Lacerta, Magnitude: 9.1, Right Ascension: 22:16:01.33, Declination: 53:59:28.80
 IC 1805 --  Cluster + nebula in Cassiopeia, Magnitude: 6.5, Right Ascension: 02:32:41.51, Declination: 61:27:24.80
+IC 1835 --  galaxy group in Aries, Surface Brightness: 23.8 mag/arcsecond^2, Right Ascension: 02:43:49.15, Declination: 14:53:22.50
 IC 1848 (Soul Nebula) -- Cluster + nebula in Cassiopeia, Magnitude: 6.5, Right Ascension: 02:51:10.59, Declination: 60:24:08.90
 IC 1851 --  star in Cassiopeia, Magnitude: 6.44, Right Ascension: 02:51:45.92, Declination: 58:18:51.50
 IC 2157 --  open cluster in Gemini, Magnitude: 8.4, Right Ascension: 06:04:47.58, Declination: 24:04:15.70
 IC 2308 --  galaxy triplet in Cancer, Surface Brightness: 22.8 mag/arcsecond^2, Right Ascension: 08:20:45.25, Declination: 19:21:44.20
-IC 4996 --  open cluster in Cygnus, Magnitude: 7.3, Right Ascension: 20:16:33.27, Declination: 37:33:19.00
-IC 5070 (Pelican Nebula) -- H II region in Cygnus, B-Magnitude: 8, Right Ascension: 20:51:00.72, Declination: 44:24:05.40
-IC 5146 (Cocoon Nebula) -- Cluster + nebula in Cygnus, Magnitude: 7.2, Right Ascension: 21:53:28.76, Declination: 47:16:00.90
