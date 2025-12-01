@@ -131,6 +131,7 @@ def find_zenith(user_dt, lati, long):
     return zenith_radec
 
 #Given the dictionary with the entry, it determines whether the object is in the night sky currently
+#It also returns angular separation to save some computation time for can_be_resolved
 def is_above_horizon(entry, zenith,limit=90.):
     try:
         ra_set = entry["Right Ascension"].split(":")
@@ -152,9 +153,56 @@ def is_above_horizon(entry, zenith,limit=90.):
     distance = sky_location.separation(zenith).deg
 
     if distance < limit:
-        return True
+        return [True, distance]
     else:
+        return [False, distance]
+
+def can_be_resolved(entry, lm, sqm, separation_deg, atmospheric_extinction_coefficient=.1):
+    try:
+        magnitude = float(entry["V-mag (visual)"])
+    except KeyError:
+        try:
+            magnitude = float(entry["B-mag (blue)"])
+        except KeyError:
+            magnitude = None
+    
+    try:
+        surface_brightness = entry["Surface brightness"]
+        surface_brightness = surface_brightness.replace("mag/arcsec<sup>2</sup>", "")
+        surface_brightness = float(surface_brightness)
+    except KeyError:
+        surface_brightness = None
+
+    if magnitude == None and surface_brightness == None:
         return False
+
+    airmasses = 1/np.cos(np.deg2rad(separation_deg))
+
+    if magnitude != None and surface_brightness != None:
+        magnitude = magnitude + (atmospheric_extinction_coefficient * airmasses)
+        surface_brightness = surface_brightness + (atmospheric_extinction_coefficient * airmasses)
+        
+        #if telescope can pick up object and it's brighter than black sky
+        if lm > magnitude and sqm > surface_brightness:
+            return True
+        else:
+            return False
+    elif magnitude != None:
+        magnitude = magnitude + (atmospheric_extinction_coefficient * airmasses)
+        if lm > magnitude:
+            return True
+        else:
+            return False
+    elif sqm != None: #this one may cause some false positives, but I doubt an object won't have magnitude and get this far
+        surface_brightness = surface_brightness + (atmospheric_extinction_coefficient * airmasses)
+        if sqm > surface_brightness:
+            return True
+        else:
+            return False
+    else: #catch anything slipping thru the cracks
+        return False
+
+
 
 #Order of results from weather_info.txt (each on its own line):
 #Bortle, SQM, Moon illumination %, Moonrise (24h), Moonset (24h),
@@ -253,9 +301,11 @@ def full_calc(weatherPath, datePath, locationPath, scopePath, datapaths):
         entries = curr_file.readlines()
         for j in entries:
             curr_entry = ast.literal_eval(j) #load string as a full dictionary
-            if is_above_horizon(curr_entry, zenith, limit):
-                visible_in_sky.append(curr_entry)
-                print("Visible Object Found! " + curr_entry["NGC"])
+            horizon = is_above_horizon(curr_entry, zenith, limit)
+            if horizon[0]:
+                if can_be_resolved(curr_entry, scope_lm, horizon[1], atmospheric_extinction_coefficient):
+                    visible_in_sky.append(curr_entry)
+                    print("Visible Object Found! " + curr_entry["NGC"]) #TODO: change ngc to something else to avoid IC errors
 
     #6. For those within 90deg of zenith, filter out those too dim to be seen
     #Use magnitude for dense/"point" objects like star clusters,
@@ -274,5 +324,5 @@ def full_calc(weatherPath, datePath, locationPath, scopePath, datapaths):
     scopeFile.close()
 
 if __name__ == "__main__":
-    datapaths = ["Data Collection/Incomplete Datasets/old_sm.json"]
+    datapaths = ["Data Collection/Incomplete Datasets/old_med.json"]
     full_calc("Weather/weather_info.txt", "Inputs/date.txt", "Inputs/location.txt", "Inputs/telescope.txt", datapaths)
