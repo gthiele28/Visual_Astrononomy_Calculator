@@ -1,0 +1,17 @@
+Refactor calculator.py, it's fucking disgusting
+
+Add eyepiece input support if nothing else
+
+Fix issue with sqm only -- calculate size using major/minor axis
+1. If both major/minor -- full process
+2. If just one -- treat as a circle (both are the same)
+3. If neither -- assume 4 arcminutes square (ultra bad guess but oh well)
+Include this in the output?  Allow user to disable this?
+
+Give user more control over output by allowing filtering and retesting?
+
+Fix Moon issue where it still scrapes for phase -- write code to get it with Astropy
+
+Add planet support using the ephemera model -- super good for checking.
+
+Because telescopes have a maximum viable magnification, use that to also cut out unviable objects?
